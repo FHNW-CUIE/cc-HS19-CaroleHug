@@ -1,0 +1,96 @@
+== CUIE Abschlussprojekt
+
+=== Bearbeitet von
+
+* Vorname, Nachname
+
+=== Integriert in die OOP2-Projekte von
+
+* *_Ergänzen Sie hier welche OOP2-Teams Ihr Custom Control erfolgreich integriert haben._*
+
+=== Abgabe
+
+* *Mittwoch, 8.1.2020*, 20:42 Uhr
+
+* Die Abgabe erfolgt durch ein "Push" auf den Master-Branch Ihres GitHub-Repositories.
+
+=== Initiale Schritte
+
+* Tragen Sie ihren Namen unter "Bearbeitet von" ein.
+
+* Benennen Sie das Package `project` um. Verwenden Sie Ihren GitHub-Account-Namen. (Via "Refactor -&gt; Rename…")
+
+* Pushen Sie diese Änderungen sofort ins Git-Repository (z.B. via "VCS -&gt; Commit… -&gt; Commit&amp;Push")
+
+=== Abschliessende Schritte
+
+* Tragen Sie die Namen der OOP2-Teams, die ihr Custom Control erfolgreich integriert haben, unter "Integriert in die OOP2-Projekte von" ein
+
+=== Aufgabe: Custom Control für SkyscrapersFX
+
+Entwerfen und implementieren Sie ein Custom Control für das OOP2-Projekt 'SkyscrapersFX' auf Basis JavaFX.
+
+* Das Custom Control soll eines (oder mehrere) der im OOP2-Projekt verwendeten Standard-Controls (insbesondere `TextField`, `Label`, `Button`, `TableView`) ersetzen.
+* Das Custom Control soll den Benutzer beim jeweiligen Arbeitsschritt optimal unterstützen, beispielsweise durch eine hochspezialisierte Anzeige oder eine effiziente Eingabemöglichkeit für einen/mehrere der Werte.
+* Falls ihr Custom Control ein _'einfaches, interaktives Anzeigeelement'_ ist, verwenden Sie bei der Implementierung die Struktur wie im package `template_simplecontrol`.
+* Falls ihr Custom Control ein _'Business Control'_ ist, das z.B. eines der `TextFields` ersetzen soll, verwenden Sie bei der Implementierung die Struktur wie im package `template_businesscontrol`.
+* Schauen Sie sich beide Templates auf jeden Fall an. Vor allem beim "Business-Control" ist bereits recht viel Basis-Funktionalität enthalten.
+
+=== Präsentation
+
+* *Montag, 6.1.2020*, 18:00 Uhr, Raum 1.021
+* Die Custom Controls werden der OOP2-Klasse im Rahmen einer *Poster-Session* präsentiert.
+* Die Postersession startet mit einer Kurzpräsentation (1 bis 2 Minuten) aller Custom-Controls.
+* Danach werden die Custom-Controls gleichzeitig ausgestellt und Gelegenheit gegeben auf Detailfragen einzugehen.
+* Erarbeiten Sie eine geeignete Präsentationsform, so dass das Interesse möglichst vieler OOP2-Teams an Ihrem Custom Control geweckt und ihr CustomControl in die jeweiligen OOP2-Projekte integrieren wird.
+** Es stehen Stellwände zur Verfügung.
+* Organisieren Sie einen Integrationstermin zusammen mit dem OOP2-Team.
+** Die Integration ist eine Gemeinschafts-Aufgabe von CUIE- und OOP2-Team.
+** Am Dienstag Nachmittag steht der Unterrichts von cuie zur Verfügung.
+
+=== Bewertung
+
+* Mit einer gut wahrnehmbaren Präsentation Ihres implementierten und lauffähigen Custom Control an der Postersession haben Sie normalerweise mindestens eine 4.0 erreicht.
+* Durch eine gute Code-Qualität des Custom Control, d.h. insbesondere eine klare Struktur des Codes entsprechend der im Unterricht erarbeiteten Konzepte, können Sie eine 5.0 erreichen.
+* Die Qualität des Controls aus Benutzersicht wird daran gemessen wie oft das Control in ein OOP2-Projekt integriert wird. Jede Integration wird mit +0.25 bewertet, jedoch maximal mit +1.5.
+* *Nicht genügend* ist es
+** wenn Sie an der Postersession nicht oder überwiegend passiv teilnehmen. *Das Spielen von Videospielen* wird zum Beispiel als passive Teilnahme angesehen.
+** falls im vorgestellten Projekt keine der im Unterricht erarbeiteten Konzepte erkennbar sind
+** das Projekt nicht compilierfähig ist
+** falls es sich um ein Plagiat handelt
+** falls kein nennenswerter Beitrag bei der Entwicklung des Custom Controls geleistet wurde
+*** bei Zweifeln an einem nennenswerten Beitrag wird eine Code-Walkthrough durchgeführt
+
+=== Bitte beachten Sie
+
+* Es wird empfohlen das Projekt in 2-er Teams zu bearbeiten.
+* Falls Sie das Projekt zu zweit bearbeiten:
+** tragen Sie beide Namen unter "Bearbeitet von" ein
+** arbeiten Sie ausschliesslich in einem Repository
+** falls sie beide Zugang zu diesem Repository wollen: tragen Sie die zweite Person als "Collaborator" ein (auf GitHub unter "Settings - &gt; Collaborators &amp; teams")
+** löschen Sie das nicht benötigte Repository (auf GitHub unter "Settings")
+** arbeiten Sie gemeinsam und gleichzeitig an den Aufgaben (Stichwort: Pair-Programming)
+** https://www.it-agile.de/wissen/agiles-engineering/pair-programming/[Pair-Programming] heisst insbesondere, dass beide Teammitglieder zu gleichen Teilen aktiv in der Entwickler-Rolle sind. Einem Entwickler lediglich bei seiner Arbeit zuzuschauen ist kein Pair-Programming.
+** das Aufteilen und separate Bearbeiten von Teil-Aufgaben ist nicht erwünscht
+* Ausdrücklich erlaubt und erwünscht ist, dass Sie sich gegebenenfalls Hilfe holen.
+** Das Programmierzentrum ist geöffnet und Nachfragen werden zum Beispiel über den im Repository integrierten Issue Tracker oder per Mail gerne beantwortet.
+
+=== Bei Problemen mit dem IntelliJ-Setup
+Es kommt immer wieder mal vor, dass der Setup des IntelliJ-Projekts nicht auf Anhieb funktioniert oder "plötzlich"
+nicht mehr funktioniert.
+
+Sie brauchen in so einem Fall NICHT nochmal den Invitation-Link annehmen oder das Projekt via “Check out from Version Control” oder "git clone …" nochmal anlegen.
+
+Statt dessen ist es am besten den IntelliJ-Setup neu generieren zu lassen. Dazu verwendet man den File "build.gradle", der eine  komplette und IDE-unabhängige Projektbeschreibung enthält.
+
+Die einzelnen Schritte:
+
+* Schliessen Sie alle geöffneten Projekte (File -> Close Project)
+* Wählen Sie “OPEN”
+* Es erscheint ein Finder-Fenster mit dem Sie zu ihrem Projekt navigieren.
+* Dort wählen Sie den File “build.gradle” aus.
+* Beim nächsten Dialog “Open as Project” wählen.
+* In der "Project Structure" kontrollieren ob Java 11 - Liberica JDK - ausgewählt ist.
+
+
+Wenn alles gut gegangen ist sollte im Project-View der Java-Ordner unter `src/main` blau sein und der Java-Ordner unter `src/test` grün.
