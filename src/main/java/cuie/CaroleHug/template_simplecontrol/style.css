@@ -1,6 +1,6 @@
 .simple-control {
     -fx-padding: 5;
-    -fx-background-color: rgb(12, 12, 12);
+    -fx-background-color: #404040;
     -base-color: rgb(2, 138, 204);
 }
 
@@ -12,4 +12,13 @@
     -fx-font-family: 'Lato Light';
     -fx-font-size: 24;
     -fx-fill: derive(-base-color, 90%);
+}
+
+.simple-control .arrow_line {
+    -fx-stroke: #089990;
+    -fx-stroke-width: 10px;
+}
+.simple-control .arrow_line_up {
+    -fx-stroke: #089990;
+    -fx-stroke-width: 10px;
 }

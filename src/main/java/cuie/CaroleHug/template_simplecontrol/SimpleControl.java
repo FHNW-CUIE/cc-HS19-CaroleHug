@@ -32,7 +32,7 @@ import javafx.util.Duration;
 /**
  * ToDo: CustomControl kurz beschreiben
  *
- * ToDo: Autoren ergänzen / ersetzen
+ * ToDo: Carole Hug
  * @author Dieter Holz
  */
 //Todo: Umbenennen.
@@ -47,18 +47,22 @@ public class SimpleControl extends Region {
 
     private static final Locale CH = new Locale("de", "CH");
 
-    private static final double ARTBOARD_WIDTH  = 100;  // Todo: Breite der "Zeichnung" aus dem Grafik-Tool übernehmen
-    private static final double ARTBOARD_HEIGHT = 100;  // Todo: Anpassen an die Breite der Zeichnung
+    private static final double ARTBOARD_WIDTH  = 1000;  // Todo: Breite der "Zeichnung" aus dem Grafik-Tool übernehmen
+    private static final double ARTBOARD_HEIGHT = 200;  // Todo: Anpassen an die Breite der Zeichnung
 
     private static final double ASPECT_RATIO = ARTBOARD_WIDTH / ARTBOARD_HEIGHT;
 
-    private static final double MINIMUM_WIDTH  = 25;    // Todo: Anpassen
+    private static final double MINIMUM_WIDTH  = 500;    // Todo: Anpassen
     private static final double MINIMUM_HEIGHT = MINIMUM_WIDTH / ASPECT_RATIO;
 
     private static final double MAXIMUM_WIDTH = 800;    // Todo: Anpassen
 
     // Todo: diese Parts durch alle notwendigen Parts der gewünschten CustomControl ersetzen
     private Circle backgroundCircle;
+    private Line arrow_line;
+    private Line arrow_line_up;
+    private Line arrow_line_down;
+
     private Text   display;
 
     // Todo: ersetzen durch alle notwendigen Properties der CustomControl
@@ -126,6 +130,15 @@ public class SimpleControl extends Region {
         backgroundCircle = new Circle(center, center, center);
         backgroundCircle.getStyleClass().add("background-circle");
 
+        arrow_line = new Line( ARTBOARD_WIDTH,ARTBOARD_HEIGHT, 0, ARTBOARD_HEIGHT);
+        arrow_line.getStyleClass().add("arrow_line");
+
+        arrow_line_up = new Line( ARTBOARD_WIDTH,ARTBOARD_HEIGHT, ARTBOARD_WIDTH - 50, ARTBOARD_HEIGHT-50);
+        arrow_line_up.getStyleClass().add("arrow_line");
+
+        arrow_line_down = new Line( ARTBOARD_WIDTH - 50,ARTBOARD_HEIGHT+50, ARTBOARD_WIDTH, ARTBOARD_HEIGHT);
+        arrow_line_down.getStyleClass().add("arrow_line");
+
         display = createCenteredText("display");
     }
 
@@ -143,7 +156,7 @@ public class SimpleControl extends Region {
 
     private void layoutParts() {
         // ToDo: alle Parts zur drawingPane hinzufügen
-        drawingPane.getChildren().addAll(backgroundCircle, display);
+        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, display);
 
         getChildren().add(drawingPane);
     }
