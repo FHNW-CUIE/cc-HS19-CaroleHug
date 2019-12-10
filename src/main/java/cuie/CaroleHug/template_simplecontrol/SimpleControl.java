@@ -130,13 +130,13 @@ public class SimpleControl extends Region {
         backgroundCircle = new Circle(center, center, center);
         backgroundCircle.getStyleClass().add("background-circle");
 
-        arrow_line = new Line( ARTBOARD_WIDTH,ARTBOARD_HEIGHT, 0, ARTBOARD_HEIGHT);
+        arrow_line = new Line( ARTBOARD_WIDTH-10,ARTBOARD_HEIGHT-50, 0, ARTBOARD_HEIGHT-50);
         arrow_line.getStyleClass().add("arrow_line");
 
-        arrow_line_up = new Line( ARTBOARD_WIDTH,ARTBOARD_HEIGHT, ARTBOARD_WIDTH - 50, ARTBOARD_HEIGHT-50);
+        arrow_line_up = new Line( ARTBOARD_WIDTH,ARTBOARD_HEIGHT-50, ARTBOARD_WIDTH - 50, ARTBOARD_HEIGHT-100);
         arrow_line_up.getStyleClass().add("arrow_line");
 
-        arrow_line_down = new Line( ARTBOARD_WIDTH - 50,ARTBOARD_HEIGHT+50, ARTBOARD_WIDTH, ARTBOARD_HEIGHT);
+        arrow_line_down = new Line( ARTBOARD_WIDTH - 50,ARTBOARD_HEIGHT, ARTBOARD_WIDTH, ARTBOARD_HEIGHT-50);
         arrow_line_down.getStyleClass().add("arrow_line");
 
         display = createCenteredText("display");
