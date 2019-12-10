@@ -1,4 +1,4 @@
-package cuie.project.template_businesscontrol;
+package cuie.CaroleHug.template_businesscontrol;
 
 import java.util.Arrays;
 

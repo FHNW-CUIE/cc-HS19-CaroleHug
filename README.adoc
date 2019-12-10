@@ -2,7 +2,7 @@
 
 === Bearbeitet von
 
-* Vorname, Nachname
+* Carole Hug
 
 === Integriert in die OOP2-Projekte von
 
