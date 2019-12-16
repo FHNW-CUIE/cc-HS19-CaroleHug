@@ -200,7 +200,7 @@ public class SimpleControl extends Region {
         for(Building skyScrapper : presentationModel.getSkyScrappers()) {
             double pointOnTimeline = ((arrow_line.getStartX() - arrow_line.getEndX()-50) * (skyScrapper.getBuild()-MIN_BUILD_YEAR))/(MAX_BUILD_YEAR - MIN_BUILD_YEAR);
             double skyScrapperHeight = (((ARTBOARD_HEIGHT-50)*skyScrapper.getHeightM()) / MAX_HEIGHT);
-            System.out.println(skyScrapperHeight);
+            //System.out.println(skyScrapperHeight);
             gc.strokeLine(pointOnTimeline, ARTBOARD_HEIGHT-skyScrapperHeight, pointOnTimeline, ARTBOARD_HEIGHT-50);
         }
     }

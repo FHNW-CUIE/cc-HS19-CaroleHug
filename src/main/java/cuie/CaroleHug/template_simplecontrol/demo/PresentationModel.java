@@ -1,9 +1,6 @@
 package cuie.CaroleHug.template_simplecontrol.demo;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
@@ -25,6 +22,7 @@ public class PresentationModel {
     private static final String FILE_NAME = "data/skyscrapers.csv";
     private static final String TAB = ";";
     private final ObservableList<Building> skyScrappers = FXCollections.observableArrayList();
+    //private final IntegerProperty skyScrappersId = new SimpleIntegerProperty(-1);
 
     public ObservableList<Building> getSkyScrappers() {
         return skyScrappers;

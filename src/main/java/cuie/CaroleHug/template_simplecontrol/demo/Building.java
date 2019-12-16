@@ -1,6 +1,5 @@
 package cuie.CaroleHug.template_simplecontrol.demo;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.scene.image.Image;
 import java.util.HashMap;
@@ -72,7 +71,6 @@ public class Building {
         }
 
         public String infoAsLine() {
-            System.out.println("test");
             return String.join(";",
                     Integer.toString(getId()),
                     getName(),
