@@ -35,6 +35,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBoundsType;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import javafx.scene.canvas.Canvas;
 
@@ -179,11 +180,13 @@ public class SimpleControl extends Region {
         label_max_year.getStyleClass().add("labels");
         label_max_year.setX((arrow_line.getStartX() - arrow_line.getEndX()-50));
         label_max_year.setY(0);
+        label_max_year.setRotate(-45);
 
         label_min_year = new Text(Integer.toString(MIN_BUILD_YEAR));
         label_min_year.getStyleClass().add("labels");
         label_min_year.setX(arrow_line.getEndX());
         label_min_year.setY(0);
+        label_min_year.setRotate(-45);
 
         display = createCenteredText("display");
     }
