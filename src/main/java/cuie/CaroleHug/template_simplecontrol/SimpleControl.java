@@ -73,6 +73,8 @@ public class SimpleControl extends Region {
     private Line arrow_line_up;
     private Line arrow_line_down;
     private Text construction_year_label;
+    private Text label_max_year;
+    private Text label_min_year;
     private Text height_label;
     private Canvas canvas_skyScrappers;
 
@@ -165,15 +167,23 @@ public class SimpleControl extends Region {
 
         height_label = new Text("Höhe");
         height_label.getStyleClass().add("labels");
-        height_label.setX(-55);
-        height_label.setY(ARTBOARD_HEIGHT/4);
+        height_label.setX(-80);
+        height_label.setY(ARTBOARD_HEIGHT/2);
 
         canvas_skyScrappers = new Canvas(ARTBOARD_WIDTH, ARTBOARD_HEIGHT);
         GraphicsContext gc = canvas_skyScrappers.getGraphicsContext2D();
         canvas_skyScrappers.getStyleClass().add("pointOnTimeline");
         drawSkyScrappers(gc);
 
+        label_max_year = new Text(Integer.toString(MAX_BUILD_YEAR));
+        label_max_year.getStyleClass().add("labels");
+        label_max_year.setX((arrow_line.getStartX() - arrow_line.getEndX()-50));
+        label_max_year.setY(0);
 
+        label_min_year = new Text(Integer.toString(MIN_BUILD_YEAR));
+        label_min_year.getStyleClass().add("labels");
+        label_min_year.setX(arrow_line.getEndX());
+        label_min_year.setY(0);
 
         display = createCenteredText("display");
     }
@@ -188,7 +198,7 @@ public class SimpleControl extends Region {
             double pointOnTimeline = ((arrow_line.getStartX() - arrow_line.getEndX()-50) * (skyScrapper.getBuild()-MIN_BUILD_YEAR))/(MAX_BUILD_YEAR - MIN_BUILD_YEAR);
             double skyScrapperHeight = (((ARTBOARD_HEIGHT-50)*skyScrapper.getHeightM()) / MAX_HEIGHT);
             System.out.println(skyScrapperHeight);
-            gc.strokeLine(pointOnTimeline, skyScrapperHeight, pointOnTimeline, ARTBOARD_HEIGHT-50);
+            gc.strokeLine(pointOnTimeline, ARTBOARD_HEIGHT-skyScrapperHeight, pointOnTimeline, ARTBOARD_HEIGHT-50);
         }
     }
 
@@ -228,7 +238,7 @@ public class SimpleControl extends Region {
     private void layoutParts() {
         // ToDo: alle Parts zur drawingPane hinzufügen
         //drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, display);
-        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers);
+        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, label_max_year, label_min_year);
 
         getChildren().add(drawingPane);
     }
