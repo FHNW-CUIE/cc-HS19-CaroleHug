@@ -32,7 +32,7 @@ import javafx.util.Duration;
 /**
  * ToDo: CustomControl kurz beschreiben
  *
- * ToDo: Carole Hug
+ * Carole Hug
  * @author Dieter Holz
  */
 //Todo: Umbenennen.
@@ -62,6 +62,8 @@ public class SimpleControl extends Region {
     private Line arrow_line;
     private Line arrow_line_up;
     private Line arrow_line_down;
+    private Text construction_year_label;
+    private Text height_label;
 
     private Text   display;
 
@@ -139,6 +141,16 @@ public class SimpleControl extends Region {
         arrow_line_down = new Line( ARTBOARD_WIDTH - 50,ARTBOARD_HEIGHT, ARTBOARD_WIDTH, ARTBOARD_HEIGHT-50);
         arrow_line_down.getStyleClass().add("arrow_line");
 
+        construction_year_label = new Text("Baujahr");
+        construction_year_label.getStyleClass().add("labels");
+        construction_year_label.setX(ARTBOARD_WIDTH - 125);
+        construction_year_label.setY(ARTBOARD_HEIGHT-20);
+
+        height_label = new Text("Höhe");
+        height_label.getStyleClass().add("labels");
+        height_label.setX(-55);
+        height_label.setY(ARTBOARD_HEIGHT/4);
+
         display = createCenteredText("display");
     }
 
@@ -156,7 +168,7 @@ public class SimpleControl extends Region {
 
     private void layoutParts() {
         // ToDo: alle Parts zur drawingPane hinzufügen
-        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, display);
+        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,display);
 
         getChildren().add(drawingPane);
     }

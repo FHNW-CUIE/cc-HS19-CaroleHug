@@ -18,3 +18,8 @@
     -fx-stroke: #089990;
     -fx-stroke-width: 10px;
 }
+
+.simple-control .labels {
+    -fx-fill: #089990;
+    -fx-font-size: 24;
+}
