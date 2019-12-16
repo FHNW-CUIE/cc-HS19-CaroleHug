@@ -57,7 +57,7 @@ public class SimpleControl extends Region {
     private static final Locale CH = new Locale("de", "CH");
 
     private static final double ARTBOARD_WIDTH  = 1000;  // Todo: Breite der "Zeichnung" aus dem Grafik-Tool übernehmen
-    private static final double ARTBOARD_HEIGHT = 200;  // Todo: Anpassen an die Breite der Zeichnung
+    private static final double ARTBOARD_HEIGHT = 500;  // Todo: Anpassen an die Breite der Zeichnung
 
     private static final double ASPECT_RATIO = ARTBOARD_WIDTH / ARTBOARD_HEIGHT;
 
@@ -186,8 +186,9 @@ public class SimpleControl extends Region {
         gc.setStroke(Color.web("#089990"));
         for(Building skyScrapper : presentationModel.getSkyScrappers()) {
             double pointOnTimeline = ((arrow_line.getStartX() - arrow_line.getEndX()-50) * (skyScrapper.getBuild()-MIN_BUILD_YEAR))/(MAX_BUILD_YEAR - MIN_BUILD_YEAR);
-            double skyScrapperHeight = ((ARTBOARD_HEIGHT*skyScrapper.getHeightM()) / MAX_HEIGHT);
-            gc.strokeLine(pointOnTimeline, ARTBOARD_HEIGHT-50, pointOnTimeline, skyScrapperHeight);
+            double skyScrapperHeight = (((ARTBOARD_HEIGHT-50)*skyScrapper.getHeightM()) / MAX_HEIGHT);
+            System.out.println(skyScrapperHeight);
+            gc.strokeLine(pointOnTimeline, skyScrapperHeight, pointOnTimeline, ARTBOARD_HEIGHT-50);
         }
     }
 
@@ -226,7 +227,8 @@ public class SimpleControl extends Region {
 
     private void layoutParts() {
         // ToDo: alle Parts zur drawingPane hinzufügen
-        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, display);
+        //drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, display);
+        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers);
 
         getChildren().add(drawingPane);
     }
