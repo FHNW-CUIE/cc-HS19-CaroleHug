@@ -23,3 +23,8 @@
     -fx-fill: #089990;
     -fx-font-size: 24;
 }
+
+.simple-control .pointOnTimeline {
+    -fx-stroke: #089990;
+    -fx-stroke-width: 5px;
+}

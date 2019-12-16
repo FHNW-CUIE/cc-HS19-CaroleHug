@@ -30,7 +30,7 @@ public class DemoPane extends BorderPane {
     private void initializeControls() {
         setPadding(new Insets(10));
 
-        cc = new SimpleControl();
+        cc = new SimpleControl(pm);
 
         slider = new Slider();
         slider.setShowTickLabels(true);
