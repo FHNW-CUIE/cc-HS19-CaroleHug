@@ -173,7 +173,6 @@ public class SimpleControl extends Region {
 
         canvas_skyScrappers = new Canvas(ARTBOARD_WIDTH, ARTBOARD_HEIGHT);
         GraphicsContext gc = canvas_skyScrappers.getGraphicsContext2D();
-        canvas_skyScrappers.getStyleClass().add("pointOnTimeline");
         drawSkyScrappers(gc);
 
         label_max_year = new Text(Integer.toString(MAX_BUILD_YEAR));
@@ -192,11 +191,12 @@ public class SimpleControl extends Region {
     }
 
     private void drawSkyScrappers(GraphicsContext gc) {
+        gc.setStroke(Color.web("#089990"));
+        gc.setLineWidth(4);
         findMinAndMaxYear();
         findMaxHeight();
         System.out.println(MAX_BUILD_YEAR);
         System.out.println(MIN_BUILD_YEAR);
-        gc.setStroke(Color.web("#089990"));
         for(Building skyScrapper : presentationModel.getSkyScrappers()) {
             double pointOnTimeline = ((arrow_line.getStartX() - arrow_line.getEndX()-50) * (skyScrapper.getBuild()-MIN_BUILD_YEAR))/(MAX_BUILD_YEAR - MIN_BUILD_YEAR);
             double skyScrapperHeight = (((ARTBOARD_HEIGHT-50)*skyScrapper.getHeightM()) / MAX_HEIGHT);
