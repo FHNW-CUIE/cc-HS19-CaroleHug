@@ -46,8 +46,8 @@ public class Building {
             setCost(Float.valueOf(line[11]));
             setMaterial(line[12]);
             setLongitude(line[13]);
-            //setLatitude(line[14]);
-            //setImageUrl(line[15]);
+            setLatitude(line[14]);
+            setImageUrl(line[15]);
             System.out.println("test");
         }
 

@@ -61,18 +61,10 @@ public class PresentationModel {
     private List<Building> readFromFile() {
         try (Stream<String> stream = getStreamOfLines(FILE_NAME, false)) {
             return stream.skip(1)                                  // erste Zeile ist die Headerzeile; ueberspringen
-                    .map(s -> new Building(s.split(TAB,14))) // aus jeder Zeile ein Objekt machen
+                    .map(s -> new Building(s.split(TAB,16))) // aus jeder Zeile ein Objekt machen
                     .collect(Collectors.toList());            // alles aufsammeln*/
         }
     }
-
-
-
-
-
-
-
-
 
     private Stream<String> getStreamOfLines(String fileName, boolean locatedInSameFolder) {
         try {
@@ -92,5 +84,4 @@ public class PresentationModel {
             throw new IllegalArgumentException(e);
         }
     }
-
 }

@@ -202,6 +202,7 @@ public class SimpleControl extends Region {
             double skyScrapperHeight = (((ARTBOARD_HEIGHT-50)*skyScrapper.getHeightM()) / MAX_HEIGHT);
             //System.out.println(skyScrapperHeight);
             gc.strokeLine(pointOnTimeline, ARTBOARD_HEIGHT-skyScrapperHeight, pointOnTimeline, ARTBOARD_HEIGHT-50);
+            System.out.println(skyScrapper.getImageUrl());
         }
     }
 
