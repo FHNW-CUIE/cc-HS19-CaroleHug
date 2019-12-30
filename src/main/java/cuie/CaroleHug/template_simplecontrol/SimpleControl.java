@@ -33,6 +33,7 @@ import javafx.scene.text.TextBoundsType;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import javafx.scene.canvas.Canvas;
+import javafx.util.converter.NumberStringConverter;
 
 /**
  * ToDo: CustomControl kurz beschreiben
@@ -68,6 +69,7 @@ public class SimpleControl extends Region {
     private Line arrow_line;
     private Line arrow_line_up;
     private Line arrow_line_down;
+    private Line currentSkyScrapper_line;
     private Text construction_year_label;
     private Text label_max_year;
     private Text label_min_year;
@@ -85,6 +87,7 @@ public class SimpleControl extends Region {
     private final DoubleProperty value = new SimpleDoubleProperty();
     private final IntegerProperty currentSkyScrapperYear = new SimpleIntegerProperty();
     private final IntegerProperty currentSkyScrapperHeight = new SimpleIntegerProperty();
+    private final StringProperty currentSkyScrapperImage = new SimpleStringProperty();
 
     // Todo: ergänzen mit allen  CSS stylable properties
     private static final CssMetaData<SimpleControl, Color> BASE_COLOR_META_DATA = FACTORY.createColorCssMetaData("-base-color", s -> s.baseColor);
@@ -185,6 +188,10 @@ public class SimpleControl extends Region {
         label_min_year.setY(0);
         label_min_year.setRotate(-45);
 
+        //currentSkyScrapper_line = new Line( ARTBOARD_WIDTH,ARTBOARD_HEIGHT, ARTBOARD_WIDTH, ARTBOARD_HEIGHT-50);
+        currentSkyScrapper_line = new Line(calculateYearOnTimeline(currentSkyScrapperYear.getValue()),ARTBOARD_HEIGHT, calculateYearOnTimeline(currentSkyScrapperYear.getValue()), ARTBOARD_HEIGHT);
+        currentSkyScrapper_line.getStyleClass().add("current");
+
         display = createCenteredText("display");
 
 
@@ -198,13 +205,23 @@ public class SimpleControl extends Region {
         System.out.println(MAX_BUILD_YEAR);
         System.out.println(MIN_BUILD_YEAR);
         for(Building skyScrapper : presentationModel.getSkyScrappers()) {
-            double pointOnTimeline = ((arrow_line.getStartX() - arrow_line.getEndX()-50) * (skyScrapper.getBuild()-MIN_BUILD_YEAR))/(MAX_BUILD_YEAR - MIN_BUILD_YEAR);
-            double skyScrapperHeight = (((ARTBOARD_HEIGHT-50)*skyScrapper.getHeightM()) / MAX_HEIGHT);
+            //double pointOnTimeline = ((arrow_line.getStartX() - arrow_line.getEndX()-50) * (skyScrapper.getBuild()-MIN_BUILD_YEAR))/(MAX_BUILD_YEAR - MIN_BUILD_YEAR);
+            double pointOnTimeline = calculateYearOnTimeline(skyScrapper.getBuild());
+            //double skyScrapperHeight = (((ARTBOARD_HEIGHT-50)*skyScrapper.getHeightM()) / MAX_HEIGHT);
+            double skyScrapperHeight = calculateHeightSkyScrapperHeight(skyScrapper.getHeightM());
             //System.out.println(skyScrapperHeight);
             gc.strokeLine(pointOnTimeline, ARTBOARD_HEIGHT-skyScrapperHeight, pointOnTimeline, ARTBOARD_HEIGHT-50);
             String url = skyScrapper.getImageUrl();
             System.out.println(url);
         }
+    }
+
+    private double calculateYearOnTimeline(double build) {
+       return ((arrow_line.getStartX() - arrow_line.getEndX()-50) * (build-MIN_BUILD_YEAR))/(MAX_BUILD_YEAR - MIN_BUILD_YEAR);
+    }
+
+    private double calculateHeightSkyScrapperHeight(double height) {
+        return (((ARTBOARD_HEIGHT-50)*height) / MAX_HEIGHT);
     }
 
     private void findMinAndMaxYear () {
@@ -243,13 +260,14 @@ public class SimpleControl extends Region {
     private void layoutParts() {
         // ToDo: alle Parts zur drawingPane hinzufügen
         //drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, display);
-        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, label_max_year, label_min_year);
+        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, label_max_year, label_min_year,currentSkyScrapper_line, display);
 
         getChildren().add(drawingPane);
     }
 
     private void setupEventHandlers() {
         //ToDo: bei Bedarf ergänzen
+
     }
 
     private void setupValueChangeListeners() {
@@ -258,6 +276,16 @@ public class SimpleControl extends Region {
         // fuer die getaktete Animation
         blinking.addListener((observable, oldValue, newValue) -> {
             startClockedAnimation(newValue);
+        });
+
+        currentSkyScrapperYear.addListener((observable, oldValue, newValue) -> {
+            currentSkyScrapper_line.setStartX(calculateYearOnTimeline(currentSkyScrapperYear.getValue()));
+            currentSkyScrapper_line.setEndX(calculateYearOnTimeline(currentSkyScrapperYear.getValue()));
+        });
+
+        currentSkyScrapperHeight.addListener((observable, oldValue, newValue) -> {
+            currentSkyScrapper_line.setStartY(ARTBOARD_HEIGHT-50+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()));
+            currentSkyScrapper_line.setEndY(ARTBOARD_HEIGHT-50);
         });
     }
 
@@ -268,11 +296,16 @@ public class SimpleControl extends Region {
 
     private void setupBindings() {
         //ToDo dieses Binding ersetzen
-        display.textProperty().bind(valueProperty().asString(CH, "%.2f"));
+        //display.textProperty().bind(valueProperty().asString(CH, "%.2f"));
+
         currentSkyScrapper = presentationModel.getSkyScrapperProxy();
         currentSkyScrapperHeight.bindBidirectional(currentSkyScrapper.heightMProperty());
         currentSkyScrapperYear.bindBidirectional(currentSkyScrapper.buildProperty());
-        System.out.println("setupbindings" + currentSkyScrapperYear.toString());
+        currentSkyScrapperImage.bind(currentSkyScrapper.imageUrlProperty());
+
+
+        System.out.println("setupbindings" + currentSkyScrapperYear.asObject());
+        display.textProperty().bindBidirectional(currentSkyScrapperYear, new NumberStringConverter());
     }
 
     private void performPeriodicTask(){

@@ -12,10 +12,16 @@
     -fx-font-family: 'Lato Light';
     -fx-font-size: 24;
     -fx-fill: derive(-base-color, 90%);
+    -fx-fill: white;
 }
 
 .simple-control .arrow_line {
     -fx-stroke: #089990;
+    -fx-stroke-width: 10px;
+}
+
+.simple-control .current {
+    -fx-stroke: red;
     -fx-stroke-width: 10px;
 }
 
