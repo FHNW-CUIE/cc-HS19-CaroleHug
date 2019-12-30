@@ -22,9 +22,11 @@ import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -76,6 +78,7 @@ public class SimpleControl extends Region {
     private Text height_label;
     private Canvas canvas_skyScrappers;
     private Circle circle;
+    private Image image;
 
     private int MAX_BUILD_YEAR;
     private int MIN_BUILD_YEAR;
@@ -195,6 +198,8 @@ public class SimpleControl extends Region {
         circle = new Circle(calculateYearOnTimeline(currentSkyScrapperYear.getValue()), ARTBOARD_HEIGHT+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()),100);
         circle.getStyleClass().add("current_element");
 
+        //image = new Image(currentSkyScrapper.getImageUrl());
+
         display = createCenteredText("display");
 
 
@@ -292,6 +297,11 @@ public class SimpleControl extends Region {
             currentSkyScrapper_line.setEndY(ARTBOARD_HEIGHT-50);
             circle.setCenterY(ARTBOARD_HEIGHT+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()));
         });
+
+        currentSkyScrapperImage.addListener((observable, oldValue, newValue) -> {
+            circle.setFill(new ImagePattern(new Image(currentSkyScrapperImage.getValue())));
+            System.out.println("image");
+        });
     }
 
     private void fillSkyScrapperList() {
@@ -306,7 +316,7 @@ public class SimpleControl extends Region {
         currentSkyScrapper = presentationModel.getSkyScrapperProxy();
         currentSkyScrapperHeight.bindBidirectional(currentSkyScrapper.heightMProperty());
         currentSkyScrapperYear.bindBidirectional(currentSkyScrapper.buildProperty());
-        currentSkyScrapperImage.bind(currentSkyScrapper.imageUrlProperty());
+        currentSkyScrapperImage.bindBidirectional(currentSkyScrapper.imageUrlProperty());
 
 
         System.out.println("setupbindings" + currentSkyScrapperYear.asObject());
