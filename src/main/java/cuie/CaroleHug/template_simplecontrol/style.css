@@ -20,9 +20,9 @@
     -fx-stroke-width: 10px;
 }
 
-.simple-control .current {
-    -fx-stroke: red;
-    -fx-stroke-width: 10px;
+.simple-control .current_element {
+    -fx-stroke: #089990;
+    -fx-stroke-width: 4px;
 }
 
 .simple-control .labels {

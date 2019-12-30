@@ -75,6 +75,7 @@ public class SimpleControl extends Region {
     private Text label_min_year;
     private Text height_label;
     private Canvas canvas_skyScrappers;
+    private Circle circle;
 
     private int MAX_BUILD_YEAR;
     private int MIN_BUILD_YEAR;
@@ -188,9 +189,11 @@ public class SimpleControl extends Region {
         label_min_year.setY(0);
         label_min_year.setRotate(-45);
 
-        //currentSkyScrapper_line = new Line( ARTBOARD_WIDTH,ARTBOARD_HEIGHT, ARTBOARD_WIDTH, ARTBOARD_HEIGHT-50);
         currentSkyScrapper_line = new Line(calculateYearOnTimeline(currentSkyScrapperYear.getValue()),ARTBOARD_HEIGHT, calculateYearOnTimeline(currentSkyScrapperYear.getValue()), ARTBOARD_HEIGHT);
-        currentSkyScrapper_line.getStyleClass().add("current");
+        currentSkyScrapper_line.getStyleClass().add("current_element");
+
+        circle = new Circle(calculateYearOnTimeline(currentSkyScrapperYear.getValue()), ARTBOARD_HEIGHT+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()),100);
+        circle.getStyleClass().add("current_element");
 
         display = createCenteredText("display");
 
@@ -260,7 +263,7 @@ public class SimpleControl extends Region {
     private void layoutParts() {
         // ToDo: alle Parts zur drawingPane hinzufügen
         //drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, display);
-        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, label_max_year, label_min_year,currentSkyScrapper_line, display);
+        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, label_max_year, label_min_year,currentSkyScrapper_line, circle, display);
 
         getChildren().add(drawingPane);
     }
@@ -281,11 +284,13 @@ public class SimpleControl extends Region {
         currentSkyScrapperYear.addListener((observable, oldValue, newValue) -> {
             currentSkyScrapper_line.setStartX(calculateYearOnTimeline(currentSkyScrapperYear.getValue()));
             currentSkyScrapper_line.setEndX(calculateYearOnTimeline(currentSkyScrapperYear.getValue()));
+            circle.setCenterX(calculateYearOnTimeline(currentSkyScrapperYear.getValue()));
         });
 
         currentSkyScrapperHeight.addListener((observable, oldValue, newValue) -> {
             currentSkyScrapper_line.setStartY(ARTBOARD_HEIGHT-50+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()));
             currentSkyScrapper_line.setEndY(ARTBOARD_HEIGHT-50);
+            circle.setCenterY(ARTBOARD_HEIGHT+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()));
         });
     }
 
