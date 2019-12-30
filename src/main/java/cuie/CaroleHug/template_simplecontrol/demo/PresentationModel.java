@@ -56,7 +56,59 @@ public class PresentationModel {
 
     public PresentationModel() {
         skyScrappers.addAll(readFromFile());
+        addListener();
     }
+
+    private void addListener() {
+        System.out.println("addlistener");
+        selectedSkyScrapperId.addListener((observable, oldValue, newValue) -> {
+            Building oldSelection = getSkyScrapper(oldValue.intValue());
+            Building newSelection = getSkyScrapper(newValue.intValue());
+
+                    if (oldSelection != null) {
+                        skyScrapperProxy.heightMProperty().unbindBidirectional(oldSelection.heightMProperty());
+                        skyScrapperProxy.buildProperty().unbindBidirectional(oldSelection.buildProperty());
+                        System.out.println(oldSelection);
+                    }
+
+                    if (newSelection != null) {
+                        skyScrapperProxy.heightMProperty().bindBidirectional(newSelection.heightMProperty());
+                        skyScrapperProxy.buildProperty().bindBidirectional(newSelection.buildProperty());
+                        System.out.println(newSelection);
+                    }
+                }
+        );
+
+    }
+
+
+    // OOP2-Project
+    private final IntegerProperty selectedSkyScrapperId = new SimpleIntegerProperty(-1);
+    private final Building skyScrapperProxy = new Building();
+    private IntegerProperty selectedIndex = new SimpleIntegerProperty();
+
+    public final Building getSkyScrapperProxy() {
+        return skyScrapperProxy;
+    }
+
+    public Building getSkyScrapper(int id) {
+        System.out.println("getskyscrapper" + id);
+        return skyScrappers.stream()
+                .filter(Building -> Building.getId() == id)
+                .findAny()
+                .orElse(null);
+    }
+
+    public void setSelectedSkyScrapperId(int selectedSkyScrapperId) {
+        this.selectedSkyScrapperId.set(selectedSkyScrapperId);
+    }
+
+
+    public void setSelectedIndex(int value) {
+        selectedIndex.set(value);
+    }
+
+
 
     private List<Building> readFromFile() {
         try (Stream<String> stream = getStreamOfLines(FILE_NAME, false)) {

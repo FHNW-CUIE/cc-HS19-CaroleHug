@@ -9,12 +9,7 @@ import java.util.Locale;
 import cuie.CaroleHug.template_simplecontrol.demo.Building;
 import cuie.CaroleHug.template_simplecontrol.demo.PresentationModel;
 import javafx.animation.AnimationTimer;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.CssMetaData;
@@ -84,9 +79,12 @@ public class SimpleControl extends Region {
     private double MAX_HEIGHT;
 
     private Text   display;
+    private Building currentSkyScrapper;
 
     // Todo: ersetzen durch alle notwendigen Properties der CustomControl
     private final DoubleProperty value = new SimpleDoubleProperty();
+    private final IntegerProperty currentSkyScrapperYear = new SimpleIntegerProperty();
+    private final IntegerProperty currentSkyScrapperHeight = new SimpleIntegerProperty();
 
     // Todo: ergänzen mit allen  CSS stylable properties
     private static final CssMetaData<SimpleControl, Color> BASE_COLOR_META_DATA = FACTORY.createColorCssMetaData("-base-color", s -> s.baseColor);
@@ -188,6 +186,8 @@ public class SimpleControl extends Region {
         label_min_year.setRotate(-45);
 
         display = createCenteredText("display");
+
+
     }
 
     private void drawSkyScrappers(GraphicsContext gc) {
@@ -202,7 +202,8 @@ public class SimpleControl extends Region {
             double skyScrapperHeight = (((ARTBOARD_HEIGHT-50)*skyScrapper.getHeightM()) / MAX_HEIGHT);
             //System.out.println(skyScrapperHeight);
             gc.strokeLine(pointOnTimeline, ARTBOARD_HEIGHT-skyScrapperHeight, pointOnTimeline, ARTBOARD_HEIGHT-50);
-            System.out.println(skyScrapper.getImageUrl());
+            String url = skyScrapper.getImageUrl();
+            System.out.println(url);
         }
     }
 
@@ -268,6 +269,10 @@ public class SimpleControl extends Region {
     private void setupBindings() {
         //ToDo dieses Binding ersetzen
         display.textProperty().bind(valueProperty().asString(CH, "%.2f"));
+        currentSkyScrapper = presentationModel.getSkyScrapperProxy();
+        currentSkyScrapperHeight.bindBidirectional(currentSkyScrapper.heightMProperty());
+        currentSkyScrapperYear.bindBidirectional(currentSkyScrapper.buildProperty());
+        System.out.println("setupbindings" + currentSkyScrapperYear.toString());
     }
 
     private void performPeriodicTask(){
