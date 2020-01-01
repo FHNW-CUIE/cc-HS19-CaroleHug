@@ -23,6 +23,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
@@ -199,11 +200,8 @@ public class SimpleControl extends Region {
         circle.getStyleClass().add("current_element");
         circle.getStyleClass().add("current_element_circle");
 
-        //image = new Image(currentSkyScrapper.getImageUrl());
-
+        //todo: remove display
         display = createCenteredText("display");
-
-
     }
 
     private void drawSkyScrappers(GraphicsContext gc) {
@@ -271,9 +269,7 @@ public class SimpleControl extends Region {
     }
 
     private void layoutParts() {
-        // ToDo: alle Parts zur drawingPane hinzufügen
-        //drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, display);
-        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, label_max_year, label_min_year,currentSkyScrapper_line, circle, display);
+        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, label_max_year, label_min_year,currentSkyScrapper_line, circle);
 
         getChildren().add(drawingPane);
     }
@@ -297,13 +293,6 @@ public class SimpleControl extends Region {
     }
 
     private void setupValueChangeListeners() {
-        //ToDo: bei Bedarf ergänzen
-
-        // fuer die getaktete Animation
-        blinking.addListener((observable, oldValue, newValue) -> {
-            startClockedAnimation(newValue);
-        });
-
         currentSkyScrapperYear.addListener((observable, oldValue, newValue) -> {
             currentSkyScrapper_line.setStartX(calculateYearOnTimeline(currentSkyScrapperYear.getValue()));
             currentSkyScrapper_line.setEndX(calculateYearOnTimeline(currentSkyScrapperYear.getValue()));
@@ -323,16 +312,12 @@ public class SimpleControl extends Region {
     }
 
     private void setupBindings() {
-        //ToDo dieses Binding ersetzen
-        //display.textProperty().bind(valueProperty().asString(CH, "%.2f"));
-
         currentSkyScrapper = presentationModel.getSkyScrapperProxy();
         currentSkyScrapperHeight.bindBidirectional(currentSkyScrapper.heightMProperty());
         currentSkyScrapperYear.bindBidirectional(currentSkyScrapper.buildProperty());
         currentSkyScrapperImage.bindBidirectional(currentSkyScrapper.imageUrlProperty());
 
-
-        //System.out.println("setupbindings" + currentSkyScrapperYear.asObject());
+        //todo: remove display
         display.textProperty().bindBidirectional(currentSkyScrapperYear, new NumberStringConverter());
     }
 

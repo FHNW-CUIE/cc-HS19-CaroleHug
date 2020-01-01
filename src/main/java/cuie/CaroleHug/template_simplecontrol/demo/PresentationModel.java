@@ -68,12 +68,14 @@ public class PresentationModel {
                     if (oldSelection != null) {
                         skyScrapperProxy.heightMProperty().unbindBidirectional(oldSelection.heightMProperty());
                         skyScrapperProxy.buildProperty().unbindBidirectional(oldSelection.buildProperty());
+                        skyScrapperProxy.imageUrlProperty().unbindBidirectional(oldSelection.imageUrlProperty());
                         System.out.println(oldSelection);
                     }
 
                     if (newSelection != null) {
                         skyScrapperProxy.heightMProperty().bindBidirectional(newSelection.heightMProperty());
                         skyScrapperProxy.buildProperty().bindBidirectional(newSelection.buildProperty());
+                        skyScrapperProxy.imageUrlProperty().bindBidirectional(newSelection.imageUrlProperty());
                         System.out.println(newSelection);
                     }
                 }

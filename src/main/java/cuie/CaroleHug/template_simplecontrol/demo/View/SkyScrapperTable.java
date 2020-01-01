@@ -11,7 +11,6 @@ import javafx.scene.layout.GridPane;
 public class SkyScrapperTable extends GridPane implements ViewMixin {
 
     private final PresentationModel model;
-
     private TableView<Building> table;
 
     public SkyScrapperTable(PresentationModel model) {
@@ -23,8 +22,6 @@ public class SkyScrapperTable extends GridPane implements ViewMixin {
     public void initializeSelf() {
         getStyleClass().add("form");
     }
-
-
 
     @Override
     public void initializeControls() {
@@ -40,7 +37,6 @@ public class SkyScrapperTable extends GridPane implements ViewMixin {
         height.setCellValueFactory(cell -> cell.getValue().heightMProperty().asObject());
 
         table.getColumns().addAll(name, build, height);
-
     }
 
     @Override
@@ -49,7 +45,6 @@ public class SkyScrapperTable extends GridPane implements ViewMixin {
     }
 
     public void setupBindings() {
-
     }
 
     @Override
@@ -66,7 +61,6 @@ public class SkyScrapperTable extends GridPane implements ViewMixin {
 
     @Override
     public void addEventHandlers() {
-
     }
 
 }
