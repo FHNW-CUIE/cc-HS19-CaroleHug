@@ -228,7 +228,7 @@ public class SimpleControl extends Region {
     }
 
     private double calculateHeightSkyScrapperHeight(double height) {
-        return (((ARTBOARD_HEIGHT-50)*height) / MAX_HEIGHT);
+        return (((ARTBOARD_HEIGHT-50)*height) / MAX_HEIGHT)+50;
     }
 
     private int calculateHeight(double y) {
@@ -284,8 +284,8 @@ public class SimpleControl extends Region {
             }
 
             double newYValue = event.getY()-ARTBOARD_HEIGHT;
-            if (newYValue <= ARTBOARD_HEIGHT && newYValue >= 0) {
-                int newHeight = calculateHeight(newYValue);
+            int newHeight = calculateHeight(newYValue);
+            if (newYValue <= ARTBOARD_HEIGHT && newYValue >= 0 && newHeight>=0) {
                 setCurrentSkyScrapperHeight(newHeight);
             }
         });
