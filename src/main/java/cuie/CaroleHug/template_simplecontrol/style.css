@@ -25,6 +25,10 @@
     -fx-stroke-width: 4px;
 }
 
+.simple-control .current_element_circle {
+    -fx-cursor: hand;
+}
+
 .simple-control .labels {
     -fx-fill: #089990;
     -fx-font-size: 24;

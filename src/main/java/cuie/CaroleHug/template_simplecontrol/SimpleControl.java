@@ -197,6 +197,7 @@ public class SimpleControl extends Region {
 
         circle = new Circle(calculateYearOnTimeline(currentSkyScrapperYear.getValue()), ARTBOARD_HEIGHT+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()),100);
         circle.getStyleClass().add("current_element");
+        circle.getStyleClass().add("current_element_circle");
 
         //image = new Image(currentSkyScrapper.getImageUrl());
 
@@ -228,8 +229,16 @@ public class SimpleControl extends Region {
        return ((arrow_line.getStartX() - arrow_line.getEndX()-50) * (build-MIN_BUILD_YEAR))/(MAX_BUILD_YEAR - MIN_BUILD_YEAR);
     }
 
+    private int calculateYear(double x) {
+        return (int) ((x*(MAX_BUILD_YEAR - MIN_BUILD_YEAR))/(arrow_line.getStartX() - arrow_line.getEndX()-50) + MIN_BUILD_YEAR);
+    }
+
     private double calculateHeightSkyScrapperHeight(double height) {
         return (((ARTBOARD_HEIGHT-50)*height) / MAX_HEIGHT);
+    }
+
+    private int calculateHeight(double y) {
+        return (int) ((y*MAX_HEIGHT)/(ARTBOARD_HEIGHT-50));
     }
 
     private void findMinAndMaxYear () {
@@ -275,6 +284,19 @@ public class SimpleControl extends Region {
 
     private void setupEventHandlers() {
         //ToDo: bei Bedarf ergänzen
+        circle.setOnMouseDragged(event -> {
+            double newXValue = ARTBOARD_WIDTH-event.getX();
+            if (newXValue <= ARTBOARD_WIDTH && newXValue >= 0) {
+                int newYear = calculateYear(newXValue);
+                setCurrentSkyScrapperYear(newYear);
+            }
+
+            double newYValue = ARTBOARD_HEIGHT-event.getY();
+            if (newYValue <= ARTBOARD_HEIGHT && newYValue >= 0) {
+                int newHeight = calculateHeight(newYValue);
+                setCurrentSkyScrapperHeight(newHeight);
+            }
+        });
 
     }
 
@@ -304,11 +326,6 @@ public class SimpleControl extends Region {
         });
     }
 
-    private void fillSkyScrapperList() {
-
-    }
-
-
     private void setupBindings() {
         //ToDo dieses Binding ersetzen
         //display.textProperty().bind(valueProperty().asString(CH, "%.2f"));
@@ -319,7 +336,7 @@ public class SimpleControl extends Region {
         currentSkyScrapperImage.bindBidirectional(currentSkyScrapper.imageUrlProperty());
 
 
-        System.out.println("setupbindings" + currentSkyScrapperYear.asObject());
+        //System.out.println("setupbindings" + currentSkyScrapperYear.asObject());
         display.textProperty().bindBidirectional(currentSkyScrapperYear, new NumberStringConverter());
     }
 
@@ -598,5 +615,29 @@ public class SimpleControl extends Region {
 
     public void setPulse(Duration pulse) {
         this.pulse.set(pulse);
+    }
+
+    public int getCurrentSkyScrapperYear() {
+        return currentSkyScrapperYear.get();
+    }
+
+    public IntegerProperty currentSkyScrapperYearProperty() {
+        return currentSkyScrapperYear;
+    }
+
+    public void setCurrentSkyScrapperYear(int currentSkyScrapperYear) {
+        this.currentSkyScrapperYear.set(currentSkyScrapperYear);
+    }
+
+    public int getCurrentSkyScrapperHeight() {
+        return currentSkyScrapperHeight.get();
+    }
+
+    public IntegerProperty currentSkyScrapperHeightProperty() {
+        return currentSkyScrapperHeight;
+    }
+
+    public void setCurrentSkyScrapperHeight(int currentSkyScrapperHeight) {
+        this.currentSkyScrapperHeight.set(currentSkyScrapperHeight);
     }
 }
