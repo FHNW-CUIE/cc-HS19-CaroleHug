@@ -214,14 +214,10 @@ public class SimpleControl extends Region {
         System.out.println(MAX_BUILD_YEAR);
         System.out.println(MIN_BUILD_YEAR);
         for(Building skyScrapper : presentationModel.getSkyScrappers()) {
-            //double pointOnTimeline = ((arrow_line.getStartX() - arrow_line.getEndX()-50) * (skyScrapper.getBuild()-MIN_BUILD_YEAR))/(MAX_BUILD_YEAR - MIN_BUILD_YEAR);
             double pointOnTimeline = calculateYearOnTimeline(skyScrapper.getBuild());
-            //double skyScrapperHeight = (((ARTBOARD_HEIGHT-50)*skyScrapper.getHeightM()) / MAX_HEIGHT);
             double skyScrapperHeight = calculateHeightSkyScrapperHeight(skyScrapper.getHeightM());
-            //System.out.println(skyScrapperHeight);
             gc.strokeLine(pointOnTimeline, ARTBOARD_HEIGHT-skyScrapperHeight, pointOnTimeline, ARTBOARD_HEIGHT-50);
             String url = skyScrapper.getImageUrl();
-            System.out.println(url);
         }
     }
 
@@ -230,7 +226,7 @@ public class SimpleControl extends Region {
     }
 
     private int calculateYear(double x) {
-        return (int) ((x*(MAX_BUILD_YEAR - MIN_BUILD_YEAR))/(arrow_line.getStartX() - arrow_line.getEndX()-50) + MIN_BUILD_YEAR);
+        return (int) ((x*(MAX_BUILD_YEAR - MIN_BUILD_YEAR))/(arrow_line.getStartX() - arrow_line.getEndX()) + MAX_BUILD_YEAR);
     }
 
     private double calculateHeightSkyScrapperHeight(double height) {
@@ -287,11 +283,11 @@ public class SimpleControl extends Region {
         circle.setOnMouseDragged(event -> {
             double newXValue = ARTBOARD_WIDTH-event.getX();
             if (newXValue <= ARTBOARD_WIDTH && newXValue >= 0) {
-                int newYear = calculateYear(newXValue);
+                int newYear = calculateYear(-newXValue);
                 setCurrentSkyScrapperYear(newYear);
             }
 
-            double newYValue = ARTBOARD_HEIGHT-event.getY();
+            double newYValue = event.getY()-ARTBOARD_HEIGHT;
             if (newYValue <= ARTBOARD_HEIGHT && newYValue >= 0) {
                 int newHeight = calculateHeight(newYValue);
                 setCurrentSkyScrapperHeight(newHeight);
