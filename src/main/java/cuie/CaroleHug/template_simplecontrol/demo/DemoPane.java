@@ -1,5 +1,6 @@
 package cuie.CaroleHug.template_simplecontrol.demo;
 
+import cuie.CaroleHug.template_simplecontrol.demo.View.SkyScrapperEdit;
 import cuie.CaroleHug.template_simplecontrol.demo.View.SkyScrapperTable;
 import javafx.geometry.Insets;
 import javafx.scene.control.ColorPicker;
@@ -21,6 +22,7 @@ public class DemoPane extends BorderPane {
     private Slider      slider;
     private ColorPicker colorPicker;
     private SkyScrapperTable skyScrapperTable;
+    private SkyScrapperEdit skyScrapperEdit;
 
     public DemoPane(PresentationModel pm) {
         this.pm = pm;
@@ -39,6 +41,7 @@ public class DemoPane extends BorderPane {
 
         colorPicker = new ColorPicker();
         skyScrapperTable = new SkyScrapperTable(pm);
+        skyScrapperEdit = new SkyScrapperEdit(pm);
     }
 
     private void layoutControls() {
@@ -48,8 +51,9 @@ public class DemoPane extends BorderPane {
         controlPane.setSpacing(10);
 
         setCenter(cc);
-        setRight(controlPane);
+        //setRight(controlPane);
         setLeft(skyScrapperTable);
+        setRight(skyScrapperEdit);
     }
 
     private void setupBindings() {
