@@ -226,7 +226,7 @@ public class SimpleControl extends Region {
     }
 
     private int calculateYear(double x) {
-        return (int) ((x*(MAX_BUILD_YEAR - MIN_BUILD_YEAR))/(arrow_line.getStartX() - arrow_line.getEndX()) + MAX_BUILD_YEAR);
+        return (int) ((x*(MAX_BUILD_YEAR - MIN_BUILD_YEAR))/(arrow_line.getStartX() - arrow_line.getEndX()+1) + MAX_BUILD_YEAR);
     }
 
     private double calculateHeightSkyScrapperHeight(double height) {
@@ -282,8 +282,8 @@ public class SimpleControl extends Region {
         //ToDo: bei Bedarf ergänzen
         circle.setOnMouseDragged(event -> {
             double newXValue = ARTBOARD_WIDTH-event.getX();
-            if (newXValue <= ARTBOARD_WIDTH && newXValue >= 0) {
-                int newYear = calculateYear(-newXValue);
+            int newYear = calculateYear(-newXValue);
+            if (newXValue <= ARTBOARD_WIDTH && newXValue >= 0 && newYear>=MIN_BUILD_YEAR) {
                 setCurrentSkyScrapperYear(newYear);
             }
 
