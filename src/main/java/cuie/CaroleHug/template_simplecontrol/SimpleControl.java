@@ -165,10 +165,10 @@ public class SimpleControl extends Region {
         arrow_line = new Line( ARTBOARD_WIDTH-10,POSITION_TIMELINE, 0, POSITION_TIMELINE);
         arrow_line.getStyleClass().add("arrow_line");
 
-        arrow_line_up = new Line( ARTBOARD_WIDTH,POSITION_TIMELINE, ARTBOARD_WIDTH - 50, POSITION_TIMELINE-50);
+        arrow_line_up = new Line( ARTBOARD_WIDTH-10,POSITION_TIMELINE, ARTBOARD_WIDTH - 25, POSITION_TIMELINE-12);
         arrow_line_up.getStyleClass().add("arrow_line");
 
-        arrow_line_down = new Line( ARTBOARD_WIDTH - 50,POSITION_TIMELINE+50, ARTBOARD_WIDTH, POSITION_TIMELINE);
+        arrow_line_down = new Line( ARTBOARD_WIDTH - 25,POSITION_TIMELINE+12, ARTBOARD_WIDTH-10, POSITION_TIMELINE);
         arrow_line_down.getStyleClass().add("arrow_line");
 
         construction_year_label = new Text("Baujahr");
