@@ -61,7 +61,7 @@ public class DemoPane extends BorderPane {
         colorPicker.valueProperty().bindBidirectional(pm.baseColorProperty());
 
 
-        cc.valueProperty().bindBidirectional(pm.pmValueProperty());
+        //cc.valueProperty().bindBidirectional(pm.pmValueProperty());
         cc.baseColorProperty().bindBidirectional(pm.baseColorProperty());
     }
 

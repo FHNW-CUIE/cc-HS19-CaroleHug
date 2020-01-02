@@ -71,8 +71,6 @@ public class SimpleControl extends Region {
     private static final String noImage = "http://simpleicon.com/wp-content/uploads/sad.png";
 
     // Todo: diese Parts durch alle notwendigen Parts der gewünschten CustomControl ersetzen
-    private Circle backgroundCircle;
-
     private Line arrow_line;
     private Line arrow_line_up;
     private Line arrow_line_down;
@@ -87,13 +85,8 @@ public class SimpleControl extends Region {
     private int MAX_BUILD_YEAR;
     private int MIN_BUILD_YEAR;
     private double MAX_HEIGHT;
-
-    private Text   display;
     private Building currentSkyScrapper;
-    private final ObservableList<Building> SkyScrapperList = FXCollections.observableArrayList();
 
-    // Todo: ersetzen durch alle notwendigen Properties der CustomControl
-    private final DoubleProperty value = new SimpleDoubleProperty();
     private final IntegerProperty currentSkyScrapperYear = new SimpleIntegerProperty();
     private final IntegerProperty currentSkyScrapperHeight = new SimpleIntegerProperty();
     private final StringProperty currentSkyScrapperImage = new SimpleStringProperty();
@@ -157,11 +150,6 @@ public class SimpleControl extends Region {
 
     private void initializeParts() {
         //ToDo: alle deklarierten Parts initialisieren
-        double center = ARTBOARD_WIDTH * 0.5;
-
-        backgroundCircle = new Circle(center, center, center);
-        backgroundCircle.getStyleClass().add("background-circle");
-
         arrow_line = new Line( ARTBOARD_WIDTH-10,POSITION_TIMELINE, 0, POSITION_TIMELINE);
         arrow_line.getStyleClass().add("arrow_line");
 
@@ -203,9 +191,6 @@ public class SimpleControl extends Region {
         circle = new Circle(calculateYearOnTimeline(currentSkyScrapperYear.getValue()), ARTBOARD_HEIGHT+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()),RADIUS_IMAGE_CIRCLE);
         circle.getStyleClass().add("current_element");
         circle.getStyleClass().add("current_element_circle");
-
-        //todo: remove display
-        display = createCenteredText("display");
     }
 
     private void drawSkyScrappers(GraphicsContext gc) {
@@ -323,9 +308,6 @@ public class SimpleControl extends Region {
         currentSkyScrapperHeight.bindBidirectional(currentSkyScrapper.heightMProperty());
         currentSkyScrapperYear.bindBidirectional(currentSkyScrapper.buildProperty());
         currentSkyScrapperImage.bind(currentSkyScrapper.imageUrlProperty());
-
-        //todo: remove display
-        display.textProperty().bindBidirectional(currentSkyScrapperYear, new NumberStringConverter());
     }
 
     private void performPeriodicTask(){
@@ -554,21 +536,7 @@ public class SimpleControl extends Region {
         return ARTBOARD_HEIGHT + verticalPadding;
     }
 
-    // alle getter und setter  (generiert via "Code -> Generate... -> Getter and Setter)
-
-    // ToDo: ersetzen durch die Getter und Setter Ihres CustomControls
-    public double getValue() {
-        return value.get();
-    }
-
-    public DoubleProperty valueProperty() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value.set(value);
-    }
-
+    // alle getter und setter
     public Color getBaseColor() {
         return baseColor.get();
     }
