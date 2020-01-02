@@ -287,7 +287,7 @@ public class SimpleControl extends Region {
                 setCurrentSkyScrapperYear(newYear);
             }
 
-            double newYValue = event.getY()-ARTBOARD_HEIGHT;
+            double newYValue = event.getY()-POSITION_TIMELINE;
             int newHeight = calculateHeight(newYValue);
             if (newYValue+3*RADIUS_IMAGE_CIRCLE <= ARTBOARD_HEIGHT && newYValue >= 0 && newHeight>=0) {
                 setCurrentSkyScrapperHeight(newHeight);
