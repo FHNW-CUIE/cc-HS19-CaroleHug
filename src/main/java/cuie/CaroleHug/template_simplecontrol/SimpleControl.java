@@ -58,6 +58,9 @@ public class SimpleControl extends Region {
 
     private static final double ARTBOARD_WIDTH  = 1000;  // Todo: Breite der "Zeichnung" aus dem Grafik-Tool übernehmen
     private static final double ARTBOARD_HEIGHT = 500;  // Todo: Anpassen an die Breite der Zeichnung
+    private static final double RADIUS_IMAGE_CIRCLE = 100;
+    private static final double POSITION_TIMELINE = ARTBOARD_HEIGHT/3;
+
 
     private static final double ASPECT_RATIO = ARTBOARD_WIDTH / ARTBOARD_HEIGHT;
 
@@ -65,6 +68,7 @@ public class SimpleControl extends Region {
     private static final double MINIMUM_HEIGHT = MINIMUM_WIDTH / ASPECT_RATIO;
 
     private static final double MAXIMUM_WIDTH = 800;    // Todo: Anpassen
+    private static final String noImage = "http://simpleicon.com/wp-content/uploads/sad.png";
 
     // Todo: diese Parts durch alle notwendigen Parts der gewünschten CustomControl ersetzen
     private Circle backgroundCircle;
@@ -79,7 +83,6 @@ public class SimpleControl extends Region {
     private Text height_label;
     private Canvas canvas_skyScrappers;
     private Circle circle;
-    private Image image;
 
     private int MAX_BUILD_YEAR;
     private int MIN_BUILD_YEAR;
@@ -87,6 +90,7 @@ public class SimpleControl extends Region {
 
     private Text   display;
     private Building currentSkyScrapper;
+    private final ObservableList<Building> SkyScrapperList = FXCollections.observableArrayList();
 
     // Todo: ersetzen durch alle notwendigen Properties der CustomControl
     private final DoubleProperty value = new SimpleDoubleProperty();
@@ -158,26 +162,26 @@ public class SimpleControl extends Region {
         backgroundCircle = new Circle(center, center, center);
         backgroundCircle.getStyleClass().add("background-circle");
 
-        arrow_line = new Line( ARTBOARD_WIDTH-10,ARTBOARD_HEIGHT-50, 0, ARTBOARD_HEIGHT-50);
+        arrow_line = new Line( ARTBOARD_WIDTH-10,POSITION_TIMELINE, 0, POSITION_TIMELINE);
         arrow_line.getStyleClass().add("arrow_line");
 
-        arrow_line_up = new Line( ARTBOARD_WIDTH,ARTBOARD_HEIGHT-50, ARTBOARD_WIDTH - 50, ARTBOARD_HEIGHT-100);
+        arrow_line_up = new Line( ARTBOARD_WIDTH,POSITION_TIMELINE, ARTBOARD_WIDTH - 50, POSITION_TIMELINE-50);
         arrow_line_up.getStyleClass().add("arrow_line");
 
-        arrow_line_down = new Line( ARTBOARD_WIDTH - 50,ARTBOARD_HEIGHT, ARTBOARD_WIDTH, ARTBOARD_HEIGHT-50);
+        arrow_line_down = new Line( ARTBOARD_WIDTH - 50,POSITION_TIMELINE+50, ARTBOARD_WIDTH, POSITION_TIMELINE);
         arrow_line_down.getStyleClass().add("arrow_line");
 
         construction_year_label = new Text("Baujahr");
         construction_year_label.getStyleClass().add("labels");
-        construction_year_label.setX(ARTBOARD_WIDTH - 125);
-        construction_year_label.setY(ARTBOARD_HEIGHT-20);
+        construction_year_label.setX(ARTBOARD_WIDTH-125);
+        construction_year_label.setY(POSITION_TIMELINE+30);
 
         height_label = new Text("Höhe");
         height_label.getStyleClass().add("labels");
         height_label.setX(-80);
-        height_label.setY(ARTBOARD_HEIGHT/2);
+        height_label.setY(POSITION_TIMELINE/2);
 
-        canvas_skyScrappers = new Canvas(ARTBOARD_WIDTH, ARTBOARD_HEIGHT);
+        canvas_skyScrappers = new Canvas(ARTBOARD_WIDTH, POSITION_TIMELINE);
         GraphicsContext gc = canvas_skyScrappers.getGraphicsContext2D();
         drawSkyScrappers(gc);
 
@@ -193,10 +197,10 @@ public class SimpleControl extends Region {
         label_min_year.setY(0);
         label_min_year.setRotate(-45);
 
-        currentSkyScrapper_line = new Line(calculateYearOnTimeline(currentSkyScrapperYear.getValue()),ARTBOARD_HEIGHT, calculateYearOnTimeline(currentSkyScrapperYear.getValue()), ARTBOARD_HEIGHT);
+        currentSkyScrapper_line = new Line(calculateYearOnTimeline(currentSkyScrapperYear.getValue()),POSITION_TIMELINE, calculateYearOnTimeline(currentSkyScrapperYear.getValue()), POSITION_TIMELINE);
         currentSkyScrapper_line.getStyleClass().add("current_element");
 
-        circle = new Circle(calculateYearOnTimeline(currentSkyScrapperYear.getValue()), ARTBOARD_HEIGHT+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()),100);
+        circle = new Circle(calculateYearOnTimeline(currentSkyScrapperYear.getValue()), ARTBOARD_HEIGHT+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()),RADIUS_IMAGE_CIRCLE);
         circle.getStyleClass().add("current_element");
         circle.getStyleClass().add("current_element_circle");
 
@@ -214,7 +218,7 @@ public class SimpleControl extends Region {
         for(Building skyScrapper : presentationModel.getSkyScrappers()) {
             double pointOnTimeline = calculateYearOnTimeline(skyScrapper.getBuild());
             double skyScrapperHeight = calculateHeightSkyScrapperHeight(skyScrapper.getHeightM());
-            gc.strokeLine(pointOnTimeline, ARTBOARD_HEIGHT-skyScrapperHeight, pointOnTimeline, ARTBOARD_HEIGHT-50);
+            gc.strokeLine(pointOnTimeline, POSITION_TIMELINE - skyScrapperHeight, pointOnTimeline, POSITION_TIMELINE);
             String url = skyScrapper.getImageUrl();
         }
     }
@@ -228,11 +232,11 @@ public class SimpleControl extends Region {
     }
 
     private double calculateHeightSkyScrapperHeight(double height) {
-        return (((ARTBOARD_HEIGHT-50)*height) / MAX_HEIGHT)+50;
+        return (((POSITION_TIMELINE)*height) / MAX_HEIGHT);
     }
 
     private int calculateHeight(double y) {
-        return (int) ((y*MAX_HEIGHT)/(ARTBOARD_HEIGHT-50));
+        return (int) ((y*MAX_HEIGHT)/(POSITION_TIMELINE));
     }
 
     private void findMinAndMaxYear () {
@@ -285,7 +289,7 @@ public class SimpleControl extends Region {
 
             double newYValue = event.getY()-ARTBOARD_HEIGHT;
             int newHeight = calculateHeight(newYValue);
-            if (newYValue <= ARTBOARD_HEIGHT && newYValue >= 0 && newHeight>=0) {
+            if (newYValue+3*RADIUS_IMAGE_CIRCLE <= ARTBOARD_HEIGHT && newYValue >= 0 && newHeight>=0) {
                 setCurrentSkyScrapperHeight(newHeight);
             }
         });
@@ -300,14 +304,17 @@ public class SimpleControl extends Region {
         });
 
         currentSkyScrapperHeight.addListener((observable, oldValue, newValue) -> {
-            currentSkyScrapper_line.setStartY(ARTBOARD_HEIGHT-50+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()));
-            currentSkyScrapper_line.setEndY(ARTBOARD_HEIGHT-50);
-            circle.setCenterY(ARTBOARD_HEIGHT+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()));
+            currentSkyScrapper_line.setStartY(POSITION_TIMELINE+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()));
+            currentSkyScrapper_line.setEndY(POSITION_TIMELINE);
+            circle.setCenterY(POSITION_TIMELINE+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue())+RADIUS_IMAGE_CIRCLE);
         });
 
         currentSkyScrapperImage.addListener((observable, oldValue, newValue) -> {
-            circle.setFill(new ImagePattern(new Image(currentSkyScrapperImage.getValue())));
-            System.out.println("image");
+            if (newValue.isEmpty()) {
+                circle.setFill(new ImagePattern(new Image(noImage)));
+            } else {
+                circle.setFill(new ImagePattern(new Image(currentSkyScrapperImage.getValue())));
+            }
         });
     }
 
@@ -315,7 +322,7 @@ public class SimpleControl extends Region {
         currentSkyScrapper = presentationModel.getSkyScrapperProxy();
         currentSkyScrapperHeight.bindBidirectional(currentSkyScrapper.heightMProperty());
         currentSkyScrapperYear.bindBidirectional(currentSkyScrapper.buildProperty());
-        currentSkyScrapperImage.bindBidirectional(currentSkyScrapper.imageUrlProperty());
+        currentSkyScrapperImage.bind(currentSkyScrapper.imageUrlProperty());
 
         //todo: remove display
         display.textProperty().bindBidirectional(currentSkyScrapperYear, new NumberStringConverter());
@@ -621,4 +628,5 @@ public class SimpleControl extends Region {
     public void setCurrentSkyScrapperHeight(int currentSkyScrapperHeight) {
         this.currentSkyScrapperHeight.set(currentSkyScrapperHeight);
     }
+
 }

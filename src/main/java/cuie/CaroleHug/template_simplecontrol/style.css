@@ -17,7 +17,7 @@
 
 .simple-control .arrow_line {
     -fx-stroke: #089990;
-    -fx-stroke-width: 10px;
+    -fx-stroke-width: 3px;
 }
 
 .simple-control .current_element {
