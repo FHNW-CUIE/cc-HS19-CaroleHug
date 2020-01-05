@@ -11,6 +11,7 @@ import cuie.CaroleHug.template_simplecontrol.demo.PresentationModel;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.css.CssMetaData;
 import javafx.css.SimpleStyleableObjectProperty;
@@ -86,6 +87,7 @@ public class SimpleControl extends Region {
     private int MIN_BUILD_YEAR;
     private double MAX_HEIGHT;
     private Building currentSkyScrapper;
+    ObservableList<Building> allSkyscrappers;
 
     private final IntegerProperty currentSkyScrapperYear = new SimpleIntegerProperty();
     private final IntegerProperty currentSkyScrapperHeight = new SimpleIntegerProperty();
@@ -150,6 +152,8 @@ public class SimpleControl extends Region {
 
     private void initializeParts() {
         //ToDo: alle deklarierten Parts initialisieren
+        allSkyscrappers = presentationModel.getSkyScrappers();
+
         arrow_line = new Line( ARTBOARD_WIDTH-10,POSITION_TIMELINE, 0, POSITION_TIMELINE);
         arrow_line.getStyleClass().add("arrow_line");
 
@@ -204,12 +208,16 @@ public class SimpleControl extends Region {
             double pointOnTimeline = calculateYearOnTimeline(skyScrapper.getBuild());
             double skyScrapperHeight = calculateHeightSkyScrapperHeight(skyScrapper.getHeightM());
             gc.strokeLine(pointOnTimeline, POSITION_TIMELINE - skyScrapperHeight, pointOnTimeline, POSITION_TIMELINE);
-            String url = skyScrapper.getImageUrl();
         }
     }
 
     private double calculateYearOnTimeline(double build) {
-       return ((arrow_line.getStartX() - arrow_line.getEndX()-50) * (build-MIN_BUILD_YEAR))/(MAX_BUILD_YEAR - MIN_BUILD_YEAR);
+        if(build<MIN_BUILD_YEAR) {
+            build = MIN_BUILD_YEAR;
+        } else if (build>MAX_BUILD_YEAR) {
+            build = MAX_BUILD_YEAR;
+        }
+        return ((arrow_line.getStartX() - arrow_line.getEndX()-50) * (build-MIN_BUILD_YEAR))/(MAX_BUILD_YEAR - MIN_BUILD_YEAR);
     }
 
     private int calculateYear(double x) {
@@ -217,6 +225,11 @@ public class SimpleControl extends Region {
     }
 
     private double calculateHeightSkyScrapperHeight(double height) {
+        if(height<0) {
+            height = 0;
+        } else if(height>MAX_HEIGHT) {
+            height = MAX_HEIGHT;
+        }
         return (((POSITION_TIMELINE)*height) / MAX_HEIGHT);
     }
 
@@ -301,6 +314,11 @@ public class SimpleControl extends Region {
                 circle.setFill(new ImagePattern(new Image(currentSkyScrapperImage.getValue())));
             }
         });
+
+        allSkyscrappers.addListener((ListChangeListener<Building>) c -> {
+            initializeParts();
+        });
+
     }
 
     private void setupBindings() {
