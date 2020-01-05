@@ -1,6 +1,6 @@
 package cuie.CaroleHug.template_simplecontrol.demo.View;
 
-import cuie.CaroleHug.template_simplecontrol.demo.SkyScrapper;
+import cuie.CaroleHug.template_simplecontrol.demo.Skyscraper;
 import cuie.CaroleHug.template_simplecontrol.demo.PresentationModel;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -49,7 +49,7 @@ public class SkyScrapperEdit extends GridPane implements ViewMixin {
 
     @Override
     public void setupBindings() {
-        SkyScrapper proxy = model.getSkyScrapperProxy();
+        Skyscraper proxy = model.getSkyscraperProxy();
         //Editierte Angaben binden
         heightEdit.textProperty().bindBidirectional(proxy.heightMProperty(), new NumberStringConverter());
         buildEdit.textProperty().bindBidirectional(proxy.buildProperty(), new NumberStringConverter());

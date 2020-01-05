@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import cuie.CaroleHug.template_simplecontrol.demo.SkyScrapper;
+import cuie.CaroleHug.template_simplecontrol.demo.Skyscraper;
 import cuie.CaroleHug.template_simplecontrol.demo.PresentationModel;
 import javafx.beans.property.*;
 import javafx.collections.ListChangeListener;
@@ -59,7 +59,7 @@ public class TimeLine extends Region {
     private Line arrow_line;
     private Line arrow_line_up;
     private Line arrow_line_down;
-    private Line currentSkyScrapper_line;
+    private Line currentSkyscraper_line;
     private Text construction_year_label;
     private Text label_max_year;
     private Text label_min_year;
@@ -70,12 +70,12 @@ public class TimeLine extends Region {
     private int MAX_BUILD_YEAR;
     private int MIN_BUILD_YEAR;
     private double MAX_HEIGHT;
-    private SkyScrapper currentSkyScrapper;
-    ObservableList<SkyScrapper> allSkyscrappers;
+    private Skyscraper currentSkyscraper;
+    ObservableList<Skyscraper> allSkyscrapers;
 
-    private final IntegerProperty currentSkyScrapperYear = new SimpleIntegerProperty();
-    private final IntegerProperty currentSkyScrapperHeight = new SimpleIntegerProperty();
-    private final StringProperty currentSkyScrapperImage = new SimpleStringProperty();
+    private final IntegerProperty currentSkyscraperYear = new SimpleIntegerProperty();
+    private final IntegerProperty currentSkyscraperHeight = new SimpleIntegerProperty();
+    private final StringProperty currentSkyscraperImage = new SimpleStringProperty();
 
     private static final CssMetaData<TimeLine, Color> BASE_COLOR_META_DATA = FACTORY.createColorCssMetaData("-base-color", s -> s.baseColor);
 
@@ -114,7 +114,7 @@ public class TimeLine extends Region {
     }
 
     private void initializeParts() {
-        allSkyscrappers = presentationModel.getSkyScrappers();
+        allSkyscrapers = presentationModel.getSkyscrapers();
 
         arrow_line = new Line( ARTBOARD_WIDTH-10,POSITION_TIMELINE, 0, POSITION_TIMELINE);
         arrow_line.getStyleClass().add("arrow_line");
@@ -151,10 +151,10 @@ public class TimeLine extends Region {
         label_min_year.setY(0);
         label_min_year.setRotate(-45);
 
-        currentSkyScrapper_line = new Line(calculateYearOnTimeline(currentSkyScrapperYear.getValue()),POSITION_TIMELINE, calculateYearOnTimeline(currentSkyScrapperYear.getValue()), POSITION_TIMELINE);
-        currentSkyScrapper_line.getStyleClass().add("current_element");
+        currentSkyscraper_line = new Line(calculateYearOnTimeline(currentSkyscraperYear.getValue()),POSITION_TIMELINE, calculateYearOnTimeline(currentSkyscraperYear.getValue()), POSITION_TIMELINE);
+        currentSkyscraper_line.getStyleClass().add("current_element");
 
-        circle = new Circle(calculateYearOnTimeline(currentSkyScrapperYear.getValue()), ARTBOARD_HEIGHT+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()),RADIUS_IMAGE_CIRCLE);
+        circle = new Circle(calculateYearOnTimeline(currentSkyscraperYear.getValue()), ARTBOARD_HEIGHT+calculateHeightSkyScrapperHeight(currentSkyscraperHeight.getValue()),RADIUS_IMAGE_CIRCLE);
         circle.getStyleClass().add("current_element");
         circle.getStyleClass().add("current_element_circle");
     }
@@ -166,9 +166,9 @@ public class TimeLine extends Region {
         findMaxHeight();
         System.out.println(MAX_BUILD_YEAR);
         System.out.println(MIN_BUILD_YEAR);
-        for(SkyScrapper skyScrapper : presentationModel.getSkyScrappers()) {
-            double pointOnTimeline = calculateYearOnTimeline(skyScrapper.getBuild());
-            double skyScrapperHeight = calculateHeightSkyScrapperHeight(skyScrapper.getHeightM());
+        for(Skyscraper skyscraper : presentationModel.getSkyscrapers()) {
+            double pointOnTimeline = calculateYearOnTimeline(skyscraper.getBuild());
+            double skyScrapperHeight = calculateHeightSkyScrapperHeight(skyscraper.getHeightM());
             gc.strokeLine(pointOnTimeline, POSITION_TIMELINE - skyScrapperHeight, pointOnTimeline, POSITION_TIMELINE);
         }
     }
@@ -202,20 +202,20 @@ public class TimeLine extends Region {
     private void findMinAndMaxYear () {
         MAX_BUILD_YEAR = Calendar.getInstance().get(Calendar.YEAR);
         MIN_BUILD_YEAR = MAX_BUILD_YEAR;
-        for(SkyScrapper skyScrapper : presentationModel.getSkyScrappers()) {
-            if(skyScrapper.getBuild() < MIN_BUILD_YEAR && skyScrapper.getBuild() != 0) {
-                MIN_BUILD_YEAR = skyScrapper.getBuild();
+        for(Skyscraper skyscraper : presentationModel.getSkyscrapers()) {
+            if(skyscraper.getBuild() < MIN_BUILD_YEAR && skyscraper.getBuild() != 0) {
+                MIN_BUILD_YEAR = skyscraper.getBuild();
             }
-            if(skyScrapper.getBuild()>MAX_BUILD_YEAR) {
-                MAX_BUILD_YEAR = skyScrapper.getBuild();
+            if(skyscraper.getBuild()>MAX_BUILD_YEAR) {
+                MAX_BUILD_YEAR = skyscraper.getBuild();
             }
         }
     }
 
     private void findMaxHeight() {
-        for(SkyScrapper skyScrapper : presentationModel.getSkyScrappers()) {
-            if (skyScrapper.getHeightM() > MAX_HEIGHT) {
-                MAX_HEIGHT = skyScrapper.getHeightM();
+        for(Skyscraper skyscraper : presentationModel.getSkyscrapers()) {
+            if (skyscraper.getHeightM() > MAX_HEIGHT) {
+                MAX_HEIGHT = skyscraper.getHeightM();
             }
         }
     }
@@ -229,7 +229,7 @@ public class TimeLine extends Region {
     }
 
     private void layoutParts() {
-        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, label_max_year, label_min_year,currentSkyScrapper_line, circle);
+        drawingPane.getChildren().addAll(arrow_line, arrow_line_up, arrow_line_down, construction_year_label, height_label,canvas_skyScrappers, label_max_year, label_min_year,currentSkyscraper_line, circle);
 
         getChildren().add(drawingPane);
     }
@@ -252,37 +252,37 @@ public class TimeLine extends Region {
     }
 
     private void setupValueChangeListeners() {
-        currentSkyScrapperYear.addListener((observable, oldValue, newValue) -> {
-            currentSkyScrapper_line.setStartX(calculateYearOnTimeline(currentSkyScrapperYear.getValue()));
-            currentSkyScrapper_line.setEndX(calculateYearOnTimeline(currentSkyScrapperYear.getValue()));
-            circle.setCenterX(calculateYearOnTimeline(currentSkyScrapperYear.getValue()));
+        currentSkyscraperYear.addListener((observable, oldValue, newValue) -> {
+            currentSkyscraper_line.setStartX(calculateYearOnTimeline(currentSkyscraperYear.getValue()));
+            currentSkyscraper_line.setEndX(calculateYearOnTimeline(currentSkyscraperYear.getValue()));
+            circle.setCenterX(calculateYearOnTimeline(currentSkyscraperYear.getValue()));
         });
 
-        currentSkyScrapperHeight.addListener((observable, oldValue, newValue) -> {
-            currentSkyScrapper_line.setStartY(POSITION_TIMELINE+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue()));
-            currentSkyScrapper_line.setEndY(POSITION_TIMELINE);
-            circle.setCenterY(POSITION_TIMELINE+calculateHeightSkyScrapperHeight(currentSkyScrapperHeight.getValue())+RADIUS_IMAGE_CIRCLE);
+        currentSkyscraperHeight.addListener((observable, oldValue, newValue) -> {
+            currentSkyscraper_line.setStartY(POSITION_TIMELINE+calculateHeightSkyScrapperHeight(currentSkyscraperHeight.getValue()));
+            currentSkyscraper_line.setEndY(POSITION_TIMELINE);
+            circle.setCenterY(POSITION_TIMELINE+calculateHeightSkyScrapperHeight(currentSkyscraperHeight.getValue())+RADIUS_IMAGE_CIRCLE);
         });
 
-        currentSkyScrapperImage.addListener((observable, oldValue, newValue) -> {
+        currentSkyscraperImage.addListener((observable, oldValue, newValue) -> {
             if (newValue.isEmpty()) {
                 circle.setFill(new ImagePattern(new Image(noImage)));
             } else {
-                circle.setFill(new ImagePattern(new Image(currentSkyScrapperImage.getValue())));
+                circle.setFill(new ImagePattern(new Image(currentSkyscraperImage.getValue())));
             }
         });
 
-        allSkyscrappers.addListener((ListChangeListener<SkyScrapper>) c -> {
+        allSkyscrapers.addListener((ListChangeListener<Skyscraper>) c -> {
             initializeParts();
         });
 
     }
 
     private void setupBindings() {
-        currentSkyScrapper = presentationModel.getSkyScrapperProxy();
-        currentSkyScrapperHeight.bindBidirectional(currentSkyScrapper.heightMProperty());
-        currentSkyScrapperYear.bindBidirectional(currentSkyScrapper.buildProperty());
-        currentSkyScrapperImage.bind(currentSkyScrapper.imageUrlProperty());
+        currentSkyscraper = presentationModel.getSkyscraperProxy();
+        currentSkyscraperHeight.bindBidirectional(currentSkyscraper.heightMProperty());
+        currentSkyscraperYear.bindBidirectional(currentSkyscraper.buildProperty());
+        currentSkyscraperImage.bind(currentSkyscraper.imageUrlProperty());
     }
 
     //resize by scaling
@@ -381,27 +381,27 @@ public class TimeLine extends Region {
     }
 
     public int getCurrentSkyScrapperYear() {
-        return currentSkyScrapperYear.get();
+        return currentSkyscraperYear.get();
     }
 
     public IntegerProperty currentSkyScrapperYearProperty() {
-        return currentSkyScrapperYear;
+        return currentSkyscraperYear;
     }
 
     public void setCurrentSkyScrapperYear(int currentSkyScrapperYear) {
-        this.currentSkyScrapperYear.set(currentSkyScrapperYear);
+        this.currentSkyscraperYear.set(currentSkyScrapperYear);
     }
 
     public int getCurrentSkyScrapperHeight() {
-        return currentSkyScrapperHeight.get();
+        return currentSkyscraperHeight.get();
     }
 
     public IntegerProperty currentSkyScrapperHeightProperty() {
-        return currentSkyScrapperHeight;
+        return currentSkyscraperHeight;
     }
 
     public void setCurrentSkyScrapperHeight(int currentSkyScrapperHeight) {
-        this.currentSkyScrapperHeight.set(currentSkyScrapperHeight);
+        this.currentSkyscraperHeight.set(currentSkyScrapperHeight);
     }
 
 }

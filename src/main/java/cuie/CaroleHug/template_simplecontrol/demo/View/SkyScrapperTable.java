@@ -1,6 +1,6 @@
 package cuie.CaroleHug.template_simplecontrol.demo.View;
 
-import cuie.CaroleHug.template_simplecontrol.demo.SkyScrapper;
+import cuie.CaroleHug.template_simplecontrol.demo.Skyscraper;
 import cuie.CaroleHug.template_simplecontrol.demo.PresentationModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 public class SkyScrapperTable extends GridPane implements ViewMixin {
 
     private final PresentationModel model;
-    private TableView<SkyScrapper> table;
+    private TableView<Skyscraper> table;
 
     public SkyScrapperTable(PresentationModel model) {
         this.model = model;
@@ -24,15 +24,15 @@ public class SkyScrapperTable extends GridPane implements ViewMixin {
 
     @Override
     public void initializeControls() {
-        table = new TableView<SkyScrapper>(model.getSkyScrappers());
+        table = new TableView<Skyscraper>(model.getSkyscrapers());
 
-        TableColumn<SkyScrapper, String> name = new TableColumn("Skyscrapper");
+        TableColumn<Skyscraper, String> name = new TableColumn("Skyscrapper");
         name.setCellValueFactory(cell -> cell.getValue().nameProperty());
 
-        TableColumn<SkyScrapper, Integer> build = new TableColumn("Jahr");
+        TableColumn<Skyscraper, Integer> build = new TableColumn("Jahr");
         build.setCellValueFactory(cell -> cell.getValue().buildProperty().asObject());
 
-        TableColumn<SkyScrapper, Float> height = new TableColumn("Höhe");
+        TableColumn<Skyscraper, Float> height = new TableColumn("Höhe");
         height.setCellValueFactory(cell -> cell.getValue().heightMProperty().asObject());
 
         table.getColumns().addAll(name, build, height);

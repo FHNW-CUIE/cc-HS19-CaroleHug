@@ -21,11 +21,11 @@ public class PresentationModel {
 
     private static final String FILE_NAME = "data/skyscrapers.csv";
     private static final String TAB = ";";
-    private final ObservableList<SkyScrapper> skyScrappers = FXCollections.observableArrayList();
+    private final ObservableList<Skyscraper> skyscrapers = FXCollections.observableArrayList();
     //private final IntegerProperty skyScrappersId = new SimpleIntegerProperty(-1);
 
-    public ObservableList<SkyScrapper> getSkyScrappers() {
-        return skyScrappers;
+    public ObservableList<Skyscraper> getSkyscrapers() {
+        return skyscrapers;
     }
 
     public double getPmValue() {
@@ -55,27 +55,27 @@ public class PresentationModel {
 
 
     public PresentationModel() {
-        skyScrappers.addAll(readFromFile());
+        skyscrapers.addAll(readFromFile());
         addListener();
     }
 
     private void addListener() {
         System.out.println("addlistener");
         selectedSkyScrapperId.addListener((observable, oldValue, newValue) -> {
-            SkyScrapper oldSelection = getSkyScrapper(oldValue.intValue());
-            SkyScrapper newSelection = getSkyScrapper(newValue.intValue());
+            Skyscraper oldSelection = getSkyScrapper(oldValue.intValue());
+            Skyscraper newSelection = getSkyScrapper(newValue.intValue());
 
                     if (oldSelection != null) {
-                        skyScrapperProxy.heightMProperty().unbindBidirectional(oldSelection.heightMProperty());
-                        skyScrapperProxy.buildProperty().unbindBidirectional(oldSelection.buildProperty());
-                        skyScrapperProxy.imageUrlProperty().unbindBidirectional(oldSelection.imageUrlProperty());
+                        skyscraperProxy.heightMProperty().unbindBidirectional(oldSelection.heightMProperty());
+                        skyscraperProxy.buildProperty().unbindBidirectional(oldSelection.buildProperty());
+                        skyscraperProxy.imageUrlProperty().unbindBidirectional(oldSelection.imageUrlProperty());
                         System.out.println(oldSelection);
                     }
 
                     if (newSelection != null) {
-                        skyScrapperProxy.heightMProperty().bindBidirectional(newSelection.heightMProperty());
-                        skyScrapperProxy.buildProperty().bindBidirectional(newSelection.buildProperty());
-                        skyScrapperProxy.imageUrlProperty().bindBidirectional(newSelection.imageUrlProperty());
+                        skyscraperProxy.heightMProperty().bindBidirectional(newSelection.heightMProperty());
+                        skyscraperProxy.buildProperty().bindBidirectional(newSelection.buildProperty());
+                        skyscraperProxy.imageUrlProperty().bindBidirectional(newSelection.imageUrlProperty());
                         System.out.println(newSelection);
                     }
                 }
@@ -86,16 +86,16 @@ public class PresentationModel {
 
     // OOP2-Project
     private final IntegerProperty selectedSkyScrapperId = new SimpleIntegerProperty(-1);
-    private final SkyScrapper skyScrapperProxy = new SkyScrapper();
+    private final Skyscraper skyscraperProxy = new Skyscraper();
     private IntegerProperty selectedIndex = new SimpleIntegerProperty();
 
-    public final SkyScrapper getSkyScrapperProxy() {
-        return skyScrapperProxy;
+    public final Skyscraper getSkyscraperProxy() {
+        return skyscraperProxy;
     }
 
-    public SkyScrapper getSkyScrapper(int id) {
+    public Skyscraper getSkyScrapper(int id) {
         System.out.println("getskyscrapper" + id);
-        return skyScrappers.stream()
+        return skyscrapers.stream()
                 .filter(Building -> Building.getId() == id)
                 .findAny()
                 .orElse(null);
@@ -112,10 +112,10 @@ public class PresentationModel {
 
 
 
-    private List<SkyScrapper> readFromFile() {
+    private List<Skyscraper> readFromFile() {
         try (Stream<String> stream = getStreamOfLines(FILE_NAME, false)) {
             return stream.skip(1)                                  // erste Zeile ist die Headerzeile; ueberspringen
-                    .map(s -> new SkyScrapper(s.split(TAB,16))) // aus jeder Zeile ein Objekt machen
+                    .map(s -> new Skyscraper(s.split(TAB,16))) // aus jeder Zeile ein Objekt machen
                     .collect(Collectors.toList());            // alles aufsammeln*/
         }
     }
