@@ -110,13 +110,13 @@ public class TimeLine extends Region {
         String stylesheet = getClass().getResource("style.css").toExternalForm();
         getStylesheets().add(stylesheet);
 
-        getStyleClass().add("time-line");  // Todo: an den Namen der Klasse (des CustomControls) anpassen
+        getStyleClass().add("time-line");
     }
 
     private void initializeParts() {
         allSkyscrapers = presentationModel.getSkyscrapers();
 
-        arrow_line = new Line( ARTBOARD_WIDTH-10,POSITION_TIMELINE, 0, POSITION_TIMELINE);
+        arrow_line = new Line( ARTBOARD_WIDTH-10,POSITION_TIMELINE, 80, POSITION_TIMELINE);
         arrow_line.getStyleClass().add("arrow_line");
 
         arrow_line_up = new Line( ARTBOARD_WIDTH-10,POSITION_TIMELINE, ARTBOARD_WIDTH - 25, POSITION_TIMELINE-12);
@@ -132,7 +132,7 @@ public class TimeLine extends Region {
 
         height_label = new Text("Höhe");
         height_label.getStyleClass().add("labels");
-        height_label.setX(-80);
+        height_label.setX(0);
         height_label.setY(POSITION_TIMELINE/2);
 
         canvas_skyscrapers = new Canvas(ARTBOARD_WIDTH, POSITION_TIMELINE);
@@ -141,7 +141,7 @@ public class TimeLine extends Region {
 
         label_max_year = new Text(Integer.toString(MAX_BUILD_YEAR));
         label_max_year.getStyleClass().add("labels");
-        label_max_year.setX((arrow_line.getStartX() - arrow_line.getEndX()-50));
+        label_max_year.setX(ARTBOARD_WIDTH-70);
         label_max_year.setY(0);
         label_max_year.setRotate(-45);
 
@@ -179,7 +179,7 @@ public class TimeLine extends Region {
         } else if (build>MAX_BUILD_YEAR) {
             build = MAX_BUILD_YEAR;
         }
-        return ((arrow_line.getStartX() - arrow_line.getEndX()-50) * (build-MIN_BUILD_YEAR))/(MAX_BUILD_YEAR - MIN_BUILD_YEAR);
+        return ((arrow_line.getStartX() - arrow_line.getEndX() -10) * (build-MIN_BUILD_YEAR))/(MAX_BUILD_YEAR - MIN_BUILD_YEAR)+80;
     }
 
     private int calculateYear(double x) {
