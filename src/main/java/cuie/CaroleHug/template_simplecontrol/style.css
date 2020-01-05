@@ -1,40 +1,29 @@
-.simple-control {
+.time-line {
     -fx-padding: 5;
     -fx-background-color: #404040;
     -base-color: rgb(2, 138, 204);
 }
 
-.simple-control .background-circle {
-    -fx-fill: -base-color;
-}
-
-.simple-control .display {
-    -fx-font-family: 'Lato Light';
-    -fx-font-size: 24;
-    -fx-fill: derive(-base-color, 90%);
-    -fx-fill: white;
-}
-
-.simple-control .arrow_line {
+.time-line .arrow_line {
     -fx-stroke: #089990;
     -fx-stroke-width: 3px;
 }
 
-.simple-control .current_element {
+.time-line .current_element {
     -fx-stroke: #089990;
     -fx-stroke-width: 4px;
 }
 
-.simple-control .current_element_circle {
+.time-line .current_element_circle {
     -fx-cursor: hand;
 }
 
-.simple-control .labels {
+.time-line .labels {
     -fx-fill: #089990;
     -fx-font-size: 24;
 }
 
-.simple-control .pointOnTimeline {
+.time-line .pointOnTimeline {
     -fx-stroke: #089990;
     -fx-stroke-width: 5px;
 }

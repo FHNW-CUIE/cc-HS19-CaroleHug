@@ -9,14 +9,14 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-import cuie.CaroleHug.template_simplecontrol.SimpleControl;
+import cuie.CaroleHug.template_simplecontrol.TimeLine;
 
 public class DemoPane extends BorderPane {
 
     private final PresentationModel pm;
 
     // declare the custom control
-    private SimpleControl cc;
+    private TimeLine cc;
 
     // all controls
     private Slider      slider;
@@ -34,7 +34,7 @@ public class DemoPane extends BorderPane {
     private void initializeControls() {
         setPadding(new Insets(10));
 
-        cc = new SimpleControl(pm);
+        cc = new TimeLine(pm);
 
         slider = new Slider();
         slider.setShowTickLabels(true);

@@ -15,9 +15,6 @@ import javafx.css.Styleable;
 import javafx.css.StyleableObjectProperty;
 import javafx.css.StyleablePropertyFactory;
 import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
-import javafx.geometry.VPos;
-import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -27,21 +24,19 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextBoundsType;
-import javafx.util.Duration;
 import javafx.scene.canvas.Canvas;
 
 /**
- * ToDo: CustomControl kurz beschreiben
+ * Es wird ein Zeitstrahl mit den Baujahren aller Wolkenkratzer erstellt, auf welcher die Länge der jeweiligen Linie auch gleich die Höhe des Gebäudes darstellt.
+ * Ausserdem wird der aktuell ausgewählte Wolkenkratzer mit Bild dargestellt. Mit dem Verschieben dieses Bildes können die Höhe sowie das Baujahr dieses Gebäudes verändert werden.
  *
  * Carole Hug
  * @author Dieter Holz
  */
-//Todo: Umbenennen.
-public class SimpleControl extends Region {
+
+public class TimeLine extends Region {
     // needed for StyleableProperties
-    private static final StyleablePropertyFactory<SimpleControl> FACTORY = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
+    private static final StyleablePropertyFactory<TimeLine> FACTORY = new StyleablePropertyFactory<>(Region.getClassCssMetaData());
 
     @Override
     public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
@@ -82,7 +77,7 @@ public class SimpleControl extends Region {
     private final IntegerProperty currentSkyScrapperHeight = new SimpleIntegerProperty();
     private final StringProperty currentSkyScrapperImage = new SimpleStringProperty();
 
-    private static final CssMetaData<SimpleControl, Color> BASE_COLOR_META_DATA = FACTORY.createColorCssMetaData("-base-color", s -> s.baseColor);
+    private static final CssMetaData<TimeLine, Color> BASE_COLOR_META_DATA = FACTORY.createColorCssMetaData("-base-color", s -> s.baseColor);
 
     private final StyleableObjectProperty<Color> baseColor = new SimpleStyleableObjectProperty<Color>(BASE_COLOR_META_DATA) {
         @Override
@@ -96,7 +91,7 @@ public class SimpleControl extends Region {
     private Pane drawingPane;
     private PresentationModel presentationModel;
 
-    public SimpleControl(PresentationModel pm) {
+    public TimeLine(PresentationModel pm) {
         presentationModel = pm;
         initializeSelf();
         initializeParts();
@@ -115,11 +110,10 @@ public class SimpleControl extends Region {
         String stylesheet = getClass().getResource("style.css").toExternalForm();
         getStylesheets().add(stylesheet);
 
-        getStyleClass().add("simple-control");  // Todo: an den Namen der Klasse (des CustomControls) anpassen
+        getStyleClass().add("time-line");  // Todo: an den Namen der Klasse (des CustomControls) anpassen
     }
 
     private void initializeParts() {
-        //ToDo: alle deklarierten Parts initialisieren
         allSkyscrappers = presentationModel.getSkyScrappers();
 
         arrow_line = new Line( ARTBOARD_WIDTH-10,POSITION_TIMELINE, 0, POSITION_TIMELINE);
