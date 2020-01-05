@@ -1,7 +1,7 @@
-package cuie.CaroleHug.template_simplecontrol.demo;
+package cuie.CaroleHug.timeline.demo;
 
-import cuie.CaroleHug.template_simplecontrol.demo.View.SkyScrapperEdit;
-import cuie.CaroleHug.template_simplecontrol.demo.View.SkyScrapperTable;
+import cuie.CaroleHug.timeline.demo.View.SkyScrapperEdit;
+import cuie.CaroleHug.timeline.demo.View.SkyScrapperTable;
 import javafx.geometry.Insets;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -9,7 +9,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-import cuie.CaroleHug.template_simplecontrol.TimeLine;
+import cuie.CaroleHug.timeline.TimeLine;
 
 public class DemoPane extends BorderPane {
 

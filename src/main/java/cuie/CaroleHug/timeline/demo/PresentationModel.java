@@ -1,4 +1,4 @@
-package cuie.CaroleHug.template_simplecontrol.demo;
+package cuie.CaroleHug.timeline.demo;
 
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;

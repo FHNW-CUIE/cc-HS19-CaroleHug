@@ -1,11 +1,11 @@
-package cuie.CaroleHug.template_simplecontrol;
+package cuie.CaroleHug.timeline;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import cuie.CaroleHug.template_simplecontrol.demo.Skyscraper;
-import cuie.CaroleHug.template_simplecontrol.demo.PresentationModel;
+import cuie.CaroleHug.timeline.demo.Skyscraper;
+import cuie.CaroleHug.timeline.demo.PresentationModel;
 import javafx.beans.property.*;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;

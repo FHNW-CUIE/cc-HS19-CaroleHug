@@ -1,7 +1,7 @@
-package cuie.CaroleHug.template_simplecontrol.demo.View;
+package cuie.CaroleHug.timeline.demo.View;
 
-import cuie.CaroleHug.template_simplecontrol.demo.Skyscraper;
-import cuie.CaroleHug.template_simplecontrol.demo.PresentationModel;
+import cuie.CaroleHug.timeline.demo.Skyscraper;
+import cuie.CaroleHug.timeline.demo.PresentationModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;

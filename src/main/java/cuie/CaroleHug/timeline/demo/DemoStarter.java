@@ -1,4 +1,4 @@
-package cuie.CaroleHug.template_simplecontrol.demo;
+package cuie.CaroleHug.timeline.demo;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

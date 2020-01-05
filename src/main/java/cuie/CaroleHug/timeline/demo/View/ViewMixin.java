@@ -1,4 +1,4 @@
-package cuie.CaroleHug.template_simplecontrol.demo.View;
+package cuie.CaroleHug.timeline.demo.View;
 
 public interface ViewMixin {
 
