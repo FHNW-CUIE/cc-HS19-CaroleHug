@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Building {
+public class SkyScrapper {
 
         private final IntegerProperty id = new SimpleIntegerProperty();
         private final IntegerProperty rank = new SimpleIntegerProperty();
@@ -26,12 +26,12 @@ public class Building {
 
         private static final Map<String, Image> flagImage = new HashMap<>();
 
-        public Building(){
+        public SkyScrapper(){
 
         }
 
 
-    public Building(String[] line) {
+    public SkyScrapper(String[] line) {
             setId(Integer.valueOf(line[0]));
             setRank(Integer.valueOf(line[1]));
             setName(line[2]);
@@ -48,7 +48,6 @@ public class Building {
             setLongitude(line[13]);
             setLatitude(line[14]);
             setImageUrl(line[15]);
-            System.out.println("test");
         }
 
         @Override
@@ -60,7 +59,7 @@ public class Building {
                 return false;
             }
 
-            Building resultat = (Building) o;
+            SkyScrapper resultat = (SkyScrapper) o;
 
             return getId()==(resultat.getId());
         }

@@ -21,10 +21,10 @@ public class PresentationModel {
 
     private static final String FILE_NAME = "data/skyscrapers.csv";
     private static final String TAB = ";";
-    private final ObservableList<Building> skyScrappers = FXCollections.observableArrayList();
+    private final ObservableList<SkyScrapper> skyScrappers = FXCollections.observableArrayList();
     //private final IntegerProperty skyScrappersId = new SimpleIntegerProperty(-1);
 
-    public ObservableList<Building> getSkyScrappers() {
+    public ObservableList<SkyScrapper> getSkyScrappers() {
         return skyScrappers;
     }
 
@@ -62,8 +62,8 @@ public class PresentationModel {
     private void addListener() {
         System.out.println("addlistener");
         selectedSkyScrapperId.addListener((observable, oldValue, newValue) -> {
-            Building oldSelection = getSkyScrapper(oldValue.intValue());
-            Building newSelection = getSkyScrapper(newValue.intValue());
+            SkyScrapper oldSelection = getSkyScrapper(oldValue.intValue());
+            SkyScrapper newSelection = getSkyScrapper(newValue.intValue());
 
                     if (oldSelection != null) {
                         skyScrapperProxy.heightMProperty().unbindBidirectional(oldSelection.heightMProperty());
@@ -86,14 +86,14 @@ public class PresentationModel {
 
     // OOP2-Project
     private final IntegerProperty selectedSkyScrapperId = new SimpleIntegerProperty(-1);
-    private final Building skyScrapperProxy = new Building();
+    private final SkyScrapper skyScrapperProxy = new SkyScrapper();
     private IntegerProperty selectedIndex = new SimpleIntegerProperty();
 
-    public final Building getSkyScrapperProxy() {
+    public final SkyScrapper getSkyScrapperProxy() {
         return skyScrapperProxy;
     }
 
-    public Building getSkyScrapper(int id) {
+    public SkyScrapper getSkyScrapper(int id) {
         System.out.println("getskyscrapper" + id);
         return skyScrappers.stream()
                 .filter(Building -> Building.getId() == id)
@@ -112,10 +112,10 @@ public class PresentationModel {
 
 
 
-    private List<Building> readFromFile() {
+    private List<SkyScrapper> readFromFile() {
         try (Stream<String> stream = getStreamOfLines(FILE_NAME, false)) {
             return stream.skip(1)                                  // erste Zeile ist die Headerzeile; ueberspringen
-                    .map(s -> new Building(s.split(TAB,16))) // aus jeder Zeile ein Objekt machen
+                    .map(s -> new SkyScrapper(s.split(TAB,16))) // aus jeder Zeile ein Objekt machen
                     .collect(Collectors.toList());            // alles aufsammeln*/
         }
     }

@@ -1,16 +1,13 @@
 package cuie.CaroleHug.template_simplecontrol;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import cuie.CaroleHug.template_simplecontrol.demo.Building;
+import cuie.CaroleHug.template_simplecontrol.demo.SkyScrapper;
 import cuie.CaroleHug.template_simplecontrol.demo.PresentationModel;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.css.CssMetaData;
@@ -24,7 +21,6 @@ import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
@@ -34,10 +30,8 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBoundsType;
-import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import javafx.scene.canvas.Canvas;
-import javafx.util.converter.NumberStringConverter;
 
 /**
  * ToDo: CustomControl kurz beschreiben
@@ -86,8 +80,8 @@ public class SimpleControl extends Region {
     private int MAX_BUILD_YEAR;
     private int MIN_BUILD_YEAR;
     private double MAX_HEIGHT;
-    private Building currentSkyScrapper;
-    ObservableList<Building> allSkyscrappers;
+    private SkyScrapper currentSkyScrapper;
+    ObservableList<SkyScrapper> allSkyscrappers;
 
     private final IntegerProperty currentSkyScrapperYear = new SimpleIntegerProperty();
     private final IntegerProperty currentSkyScrapperHeight = new SimpleIntegerProperty();
@@ -204,7 +198,7 @@ public class SimpleControl extends Region {
         findMaxHeight();
         System.out.println(MAX_BUILD_YEAR);
         System.out.println(MIN_BUILD_YEAR);
-        for(Building skyScrapper : presentationModel.getSkyScrappers()) {
+        for(SkyScrapper skyScrapper : presentationModel.getSkyScrappers()) {
             double pointOnTimeline = calculateYearOnTimeline(skyScrapper.getBuild());
             double skyScrapperHeight = calculateHeightSkyScrapperHeight(skyScrapper.getHeightM());
             gc.strokeLine(pointOnTimeline, POSITION_TIMELINE - skyScrapperHeight, pointOnTimeline, POSITION_TIMELINE);
@@ -240,7 +234,7 @@ public class SimpleControl extends Region {
     private void findMinAndMaxYear () {
         MAX_BUILD_YEAR = Calendar.getInstance().get(Calendar.YEAR);
         MIN_BUILD_YEAR = MAX_BUILD_YEAR;
-        for(Building skyScrapper : presentationModel.getSkyScrappers()) {
+        for(SkyScrapper skyScrapper : presentationModel.getSkyScrappers()) {
             if(skyScrapper.getBuild() < MIN_BUILD_YEAR && skyScrapper.getBuild() != 0) {
                 MIN_BUILD_YEAR = skyScrapper.getBuild();
             }
@@ -251,7 +245,7 @@ public class SimpleControl extends Region {
     }
 
     private void findMaxHeight() {
-        for(Building skyScrapper : presentationModel.getSkyScrappers()) {
+        for(SkyScrapper skyScrapper : presentationModel.getSkyScrappers()) {
             if (skyScrapper.getHeightM() > MAX_HEIGHT) {
                 MAX_HEIGHT = skyScrapper.getHeightM();
             }
@@ -277,7 +271,6 @@ public class SimpleControl extends Region {
     }
 
     private void setupEventHandlers() {
-        //ToDo: bei Bedarf ergänzen
         circle.setOnMouseDragged(event -> {
             double newXValue = ARTBOARD_WIDTH-event.getX();
             int newYear = calculateYear(-newXValue);
@@ -315,7 +308,7 @@ public class SimpleControl extends Region {
             }
         });
 
-        allSkyscrappers.addListener((ListChangeListener<Building>) c -> {
+        allSkyscrappers.addListener((ListChangeListener<SkyScrapper>) c -> {
             initializeParts();
         });
 
