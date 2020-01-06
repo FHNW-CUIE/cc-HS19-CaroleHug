@@ -161,7 +161,7 @@ public class TimeLine extends Region {
         findMaxHeight();
         System.out.println(MAX_BUILD_YEAR);
         System.out.println(MIN_BUILD_YEAR);
-        for(Skyscraper skyscraper : presentationModel.getSkyscrapers()) {
+        for(Skyscraper skyscraper : allSkyscrapers) {
             double pointOnTimeline = calculateYearOnTimeline(skyscraper.getBuild());
             double skyscraperHeight = calculateHeightSkyscraperHeight(skyscraper.getHeightM());
             gc.strokeLine(pointOnTimeline, POSITION_TIMELINE - skyscraperHeight, pointOnTimeline, POSITION_TIMELINE);
