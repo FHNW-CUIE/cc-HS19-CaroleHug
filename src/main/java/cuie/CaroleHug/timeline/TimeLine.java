@@ -106,7 +106,7 @@ public class TimeLine extends Region {
         // load stylesheets
         // String fonts = getClass().getResource("/fonts/fonts.css").toExternalForm();
         // getStylesheets().add(fonts);
-
+        allSkyscrapers = presentationModel.getSkyscrapers();
         String stylesheet = getClass().getResource("style.css").toExternalForm();
         getStylesheets().add(stylesheet);
 
@@ -114,8 +114,6 @@ public class TimeLine extends Region {
     }
 
     private void initializeParts() {
-        allSkyscrapers = presentationModel.getSkyscrapers();
-
         arrow_line = new Line( ARTBOARD_WIDTH-10,POSITION_TIMELINE, 80, POSITION_TIMELINE);
         arrow_line.getStyleClass().add("arrow_line");
 
