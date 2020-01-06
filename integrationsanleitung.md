@@ -5,7 +5,7 @@ Es wird ein Zeitstrahl mit den Baujahren aller Wolkenkratzer erstellt, auf welch
 Ausserdem wird der aktuell ausgewählte Wolkenkratzer mit Bild dargestellt. Mit dem Verschieben dieses Bildes können die Höhe sowie das Baujahr dieses Gebäudes verändert werden.
 
 Dies sieht je nach Datensatz beispielsweise wie folgt aus, wobei die Tabelle nicht Teil des Custom Controls sind:
-link zum Bild
+![image is missing](https://github.com/FHNW-CUIE/cc-HS19-CaroleHug/blob/master/timeline.PNG)
 
 ## Herunterladen und mit dem Testprojekt ausführen
 * Öffne das Repository: https://github.com/FHNW-CUIE/cc-HS19-CaroleHug
