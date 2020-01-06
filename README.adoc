@@ -6,7 +6,7 @@
 
 === Integriert in die OOP2-Projekte von
 
-* *_Ergänzen Sie hier welche OOP2-Teams Ihr Custom Control erfolgreich integriert haben._*
+* Myriam Rellstab
 
 === Abgabe
 
