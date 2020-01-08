@@ -154,6 +154,10 @@ public class TimeLine extends Region {
         circle.getStyleClass().add("current_element_circle");
     }
 
+    private void drawCanvas() {
+
+    }
+
     private void drawSkyscrapers(GraphicsContext gc) {
         gc.setStroke(Color.web("#089990"));
         gc.setLineWidth(4);
@@ -259,10 +263,15 @@ public class TimeLine extends Region {
         });
 
         currentSkyscraperImage.addListener((observable, oldValue, newValue) -> {
-            if (newValue.isEmpty()) {
+            if (newValue == null || newValue.isEmpty()) {
                 circle.setFill(new ImagePattern(new Image(noImage)));
             } else {
-                circle.setFill(new ImagePattern(new Image(currentSkyscraperImage.getValue())));
+                Image image = new Image(currentSkyscraperImage.getValue());
+                if(image.getException() == null) {
+                    circle.setFill(new ImagePattern(image));
+                } else {
+                    circle.setFill(new ImagePattern(new Image(noImage)));
+                }
             }
         });
 
