@@ -154,10 +154,6 @@ public class TimeLine extends Region {
         circle.getStyleClass().add("current_element_circle");
     }
 
-    private void drawCanvas() {
-
-    }
-
     private void drawSkyscrapers(GraphicsContext gc) {
         gc.setStroke(Color.web("#089990"));
         gc.setLineWidth(4);
@@ -165,10 +161,20 @@ public class TimeLine extends Region {
         findMaxHeight();
         System.out.println(MAX_BUILD_YEAR);
         System.out.println(MIN_BUILD_YEAR);
+        drawLines();
+    }
+
+    private void updateCanvas(){
+        GraphicsContext gc = canvas_skyscrapers.getGraphicsContext2D();
+        gc.clearRect(0,0,ARTBOARD_WIDTH,ARTBOARD_HEIGHT);
+        drawLines();
+    }
+
+    private void drawLines() {
         for(Skyscraper skyscraper : allSkyscrapers) {
             double pointOnTimeline = calculateYearOnTimeline(skyscraper.getBuild());
             double skyscraperHeight = calculateHeightSkyscraperHeight(skyscraper.getHeightM());
-            gc.strokeLine(pointOnTimeline, POSITION_TIMELINE - skyscraperHeight, pointOnTimeline, POSITION_TIMELINE);
+            canvas_skyscrapers.getGraphicsContext2D().strokeLine(pointOnTimeline, POSITION_TIMELINE - skyscraperHeight, pointOnTimeline, POSITION_TIMELINE);
         }
     }
 
@@ -276,7 +282,7 @@ public class TimeLine extends Region {
         });
 
         allSkyscrapers.addListener((ListChangeListener<Skyscraper>) c -> {
-            initializeParts();
+            updateCanvas();
         });
 
     }
